@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visitor Survey – Bosnia and Herzegovina</title>
+<style>
+:root{--bg:#f4f7f8;--card:#fff;--ink:#1b2a33;--mut:#5b6b73;--line:#d5dde1;--acc:#1f5f6b;--acc2:#e6f0f2;--err:#a3281f}
+@media(prefers-color-scheme:dark){:root{--bg:#10191e;--card:#18242b;--ink:#e8eef1;--mut:#9fb0b8;--line:#2c3d46;--acc:#6fc0cf;--acc2:#1e3640;--err:#ff8f85}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,"Segoe UI",Tahoma,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:16px 16px 64px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0 4px}
+h1{font:600 1.45rem/1.25 Georgia,"Times New Roman",serif;margin:12px 0 4px}
+h2{font:600 1.2rem Georgia,"Times New Roman",serif;margin:0 0 12px}
+.lang{display:flex;gap:6px}.lang button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 11px;border-radius:6px;font:inherit;font-size:.9rem;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--acc);color:#fff;border-color:var(--acc)}
+.bar{height:6px;background:var(--line);border-radius:3px;margin:12px 0 18px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px}
+.q{margin:0 0 22px;border:0;padding:0}.q>legend,.q>label.t{font-weight:600;display:block;margin-bottom:8px;padding:0}
+.req::after{content:" *";color:var(--err)}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;cursor:pointer}.opt input{margin-top:5px;accent-color:var(--acc);flex:none}
+select,input[type=number],textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+.stem{font-weight:600;margin:4px 0 10px}.legend{color:var(--mut);font-size:.88rem;margin-bottom:12px}
+.li{padding:12px 0;border-top:1px solid var(--line)}.li p{margin:0 0 8px}
+.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sc label{position:relative;text-align:center}.sc input{position:absolute;opacity:0}
+.sc span{display:block;padding:9px 0;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:var(--bg)}
+.sc input:checked+span{background:var(--acc);color:#fff;border-color:var(--acc)}
+.sc input:focus-visible+span,button:focus-visible,select:focus-visible,.opt input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.btn{padding:11px 22px;border-radius:6px;border:1px solid var(--acc);background:var(--acc);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+.btn.g{background:transparent;color:var(--acc)}.btn:disabled{opacity:.5}
+.msg{color:var(--err);margin-top:12px;min-height:1.4em}.hp{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<main>
+<header><div class="lang" id="lang" role="group" aria-label="Language"></div></header>
+<h1 id="ttl"></h1>
+<div class="bar" aria-hidden="true"><i id="bar"></i></div>
+<div class="card" id="card"></div>
+</main>
+<script>
+/* ====== CONFIG: paste your Google Apps Script Web App URL here ====== */
+const ENDPOINT = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+/* ==================================================================== */
+const LG=['en','bs','ar','de'],NAMES={en:'English',bs:'Bosanski',ar:'العربية',de:'Deutsch'};
+const N=s=>[s,s,s,s];
+const UI={
+ttl:["Tourism in Bosnia and Herzegovina – Visitor Survey","Turizam u Bosni i Hercegovini – anketa za posjetioce","السياحة في البوسنة والهرسك – استبيان الزوار","Tourismus in Bosnien und Herzegowina – Besucherumfrage"],
+intro:["This anonymous, voluntary academic survey (MBA thesis, International Burch University) takes about 12–15 minutes. No identifying data is collected; answers are analysed in aggregate only. “Peak summer” = June–September; “off-season” = October–May. Please answer about your most recent visit to B&H within the last 12 months.","Ova anonimna i dobrovoljna akademska anketa (magistarski rad, International Burch University) traje oko 12–15 minuta. Ne prikupljaju se podaci koji identifikuju osobu; odgovori se analiziraju samo zbirno. „Vrhunac ljeta“ = juni–septembar; „van sezone“ = oktobar–maj. Odgovarajte o posljednjoj posjeti BiH u posljednjih 12 mjeseci.","هذا استبيان أكاديمي طوعي ومجهول الهوية (رسالة ماجستير إدارة الأعمال، جامعة إنترناشونال بورتش) ويستغرق نحو 12–15 دقيقة. لا تُجمع أي بيانات تعريفية، وتُحلَّل الإجابات بشكل إجمالي فقط. «ذروة الصيف» = يونيو–سبتمبر؛ «خارج الموسم» = أكتوبر–مايو. يرجى الإجابة عن زيارتك الأخيرة للبوسنة والهرسك خلال آخر 12 شهرًا.","Diese anonyme, freiwillige akademische Umfrage (MBA-Abschlussarbeit, International Burch University) dauert etwa 12–15 Minuten. Es werden keine identifizierenden Daten erhoben; die Antworten werden nur aggregiert ausgewertet. „Hochsommer“ = Juni–September; „Nebensaison“ = Oktober–Mai. Bitte beziehen Sie sich auf Ihren letzten Besuch in BiH innerhalb der letzten 12 Monate."],
+cons:["I have read the information and agree to participate.","Pročitao/la sam informacije i pristajem učestvovati.","قرأت المعلومات وأوافق على المشاركة.","Ich habe die Informationen gelesen und stimme der Teilnahme zu."],
+start:["Start","Započni","ابدأ","Start"],next:["Next","Dalje","التالي","Weiter"],back:["Back","Nazad","السابق","Zurück"],send:["Submit answers","Pošalji odgovore","إرسال الإجابات","Antworten absenden"],
+req:["Please answer the required questions (*).","Molimo odgovorite na obavezna pitanja (*).","يرجى الإجابة عن الأسئلة المطلوبة (*).","Bitte beantworten Sie die Pflichtfragen (*)."],
+thx:["Thank you! Your answers have been submitted.","Hvala! Vaši odgovori su poslani.","شكرًا لك! تم إرسال إجاباتك.","Vielen Dank! Ihre Antworten wurden übermittelt."],
+no:["Thank you. Unfortunately you are not eligible for this survey.","Hvala. Nažalost, ne ispunjavate uslove za ovu anketu.","شكرًا لك. للأسف أنت غير مؤهل للمشاركة في هذا الاستبيان.","Danke. Leider können Sie an dieser Umfrage nicht teilnehmen."],
+err:["Submission failed. Check your connection and try again.","Slanje nije uspjelo. Provjerite vezu i pokušajte ponovo.","فشل الإرسال. تحقق من اتصالك وحاول مرة أخرى.","Senden fehlgeschlagen. Bitte Verbindung prüfen und erneut versuchen."],
+sel:["Select…","Odaberite…","اختر…","Auswählen…"],
+sc:["1 = Strongly disagree · 5 = Strongly agree","1 = Uopće se ne slažem · 5 = Potpuno se slažem","1 = لا أوافق بشدة · 5 = أوافق بشدة","1 = Stimme überhaupt nicht zu · 5 = Stimme voll zu"]};
+const YN=[["Yes","Da","نعم","Ja"],["No","Ne","لا","Nein"]];
+const MON=[["January","Januar","يناير","Januar"],["February","Februar","فبراير","Februar"],["March","Mart","مارس","März"],["April","April","أبريل","April"],["May","Maj","مايو","Mai"],["June","Juni","يونيو","Juni"],["July","Juli","يوليو","Juli"],["August","August","أغسطس","August"],["September","Septembar","سبتمبر","September"],["October","Oktobar","أكتوبر","Oktober"],["November","Novembar","نوفمبر","November"],["December","Decembar","ديسمبر","Dezember"]];
+const CTRY=[["Austria","Austrija","النمسا","Österreich"],["Germany","Njemačka","ألمانيا","Deutschland"],["Italy","Italija","إيطاليا","Italien"],["France","Francuska","فرنسا","Frankreich"],["Poland","Poljska","بولندا","Polen"],["Other EU country","Druga zemlja EU","دولة أخرى في الاتحاد الأوروبي","Anderes EU-Land"],["Saudi Arabia","Saudijska Arabija","السعودية","Saudi-Arabien"],["Kuwait","Kuvajt","الكويت","Kuwait"],["Qatar","Katar","قطر","Katar"],["United Arab Emirates","Ujedinjeni Arapski Emirati","الإمارات العربية المتحدة","Vereinigte Arabische Emirate"],["Other GCC country","Druga GCC zemlja","دولة خليجية أخرى","Anderes GCC-Land"],["Other country","Druga zemlja","دولة أخرى","Anderes Land"]];
+const OTH=["Other","Ostalo","أخرى","Sonstiges"],PNS=["Prefer not to say","Radije ne bih odgovorio/la","أفضل عدم الإجابة","Keine Angabe"];
+/* Page definitions. q: [id,type,label,options,required]  types: sel, s(single), m(multi), n(number), x(text) */
+const PAGES=[
+{t:["About you","O vama","عنك","Über Sie"],q:[
+["A1","sel",["Country of residence","Zemlja prebivališta","بلد الإقامة","Wohnland"],CTRY,1],
+["A2","s",["Gender","Spol","الجنس","Geschlecht"],[["Female","Žensko","أنثى","Weiblich"],["Male","Muško","ذكر","Männlich"],PNS]],
+["A3","s",["Age group","Dobna grupa","الفئة العمرية","Altersgruppe"],["18–24","25–34","35–44","45–54","55–64","65+"].map(N)],
+["A4","s",["Highest education completed","Najviši završeni nivo obrazovanja","أعلى مستوى تعليمي","Höchster Bildungsabschluss"],[["Secondary school or lower","Srednja škola ili niže","ثانوية أو أقل","Sekundarschule oder niedriger"],["Bachelor’s degree","Bachelor (osnovne studije)","بكالوريوس","Bachelor"],["Master’s degree","Master","ماجستير","Master"],["Doctorate","Doktorat","دكتوراه","Promotion"],OTH]],
+["A5","s",["Monthly household income (EUR, optional)","Mjesečni prihod domaćinstva (EUR, neobavezno)","الدخل الشهري للأسرة (يورو، اختياري)","Monatliches Haushaltseinkommen (EUR, optional)"],["< 1,500","1,500–2,999","3,000–4,999","5,000–7,999","8,000+"].map(N).concat([PNS])]]},
+{t:["Your trip","Vaše putovanje","رحلتك","Ihre Reise"],q:[
+["B1","s",["Was your most recent trip your first visit to B&H?","Je li vam posljednje putovanje bilo prva posjeta BiH?","هل كانت رحلتك الأخيرة أول زيارة لك؟","War Ihre letzte Reise Ihr erster Besuch in BiH?"],YN],
+["B2","s",["If not: how many previous visits?","Ako nije: koliko ste puta ranije posjetili BiH?","إن لم تكن الأولى: كم مرة زرتها سابقًا؟","Falls nein: wie oft waren Sie zuvor in BiH?"],["1","2–3","4–5","6+"].map(N)],
+["B3","sel",["Month of your most recent visit (month the trip started)","Mjesec posljednje posjete (mjesec početka putovanja)","شهر زيارتك الأخيرة (شهر بدء الرحلة)","Monat Ihres letzten Besuchs (Beginn der Reise)"],MON,1],
+["B4","n",["Number of nights in B&H","Broj noćenja u BiH","عدد الليالي في البوسنة والهرسك","Anzahl der Übernachtungen in BiH"]],
+["B5","s",["Main purpose of visit","Glavni cilj posjete","الغرض الرئيسي من الزيارة","Hauptzweck des Besuchs"],[["Leisure / holiday","Odmor","ترفيه / عطلة","Urlaub / Freizeit"],["Culture, heritage or religious sites","Kultura, baština ili vjerska mjesta","ثقافة وتراث ومواقع دينية","Kultur, Erbe oder religiöse Stätten"],["Nature and outdoor activities","Priroda i outdoor aktivnosti","طبيعة وأنشطة خارجية","Natur und Outdoor"],["Spa, health or wellness","Spa, zdravlje ili wellness","سبا وصحة واستجمام","Spa, Gesundheit oder Wellness"],["Visiting friends and relatives","Posjeta prijateljima i rodbini","زيارة الأصدقاء والأقارب","Besuch von Freunden/Verwandten"],["Business or work","Posao","عمل وأعمال","Geschäftlich / Arbeit"],["Property I own or consider buying","Nekretnina koju posjedujem ili razmatram kupiti","عقار أملكه أو أفكر في شرائه","Eigene oder zum Kauf erwogene Immobilie"],OTH]],
+["B6","s",["Travel companions","S kim ste putovali?","مع من سافرت؟","Mit wem sind Sie gereist?"],[["Alone","Sam/a","بمفردي","Allein"],["Partner only","Samo s partnerom","مع الشريك فقط","Nur mit Partner/in"],["Family with children","Porodica s djecom","عائلة مع أطفال","Familie mit Kindern"],["Friends","Prijatelji","أصدقاء","Freunde"],["Organised group","Organizovana grupa","مجموعة منظمة","Organisierte Gruppe"]]],
+["B7","m",["Parts of B&H visited (select all that apply)","Dijelovi BiH koje ste posjetili (više odgovora)","المناطق التي زرتها (اختر كل ما ينطبق)","Besuchte Regionen (Mehrfachauswahl)"],[["Sarajevo and surroundings","Sarajevo i okolina","سراييفو وضواحيها","Sarajevo und Umgebung"],["Mostar and Herzegovina","Mostar i Hercegovina","موستار والهرسك","Mostar und Herzegowina"],["Central Bosnia (Travnik, Jajce)","Srednja Bosna (Travnik, Jajce)","وسط البوسنة (ترافنيك، يايتسه)","Zentralbosnien (Travnik, Jajce)"],["Una-Sana (Bihać)","Unsko-sanska regija (Bihać)","منطقة أونا-سانا (بيهاتش)","Una-Sana (Bihać)"],["Banja Luka and north","Banja Luka i sjever","بانيالوكا والشمال","Banja Luka und Norden"],["East / north-east (Višegrad, Tuzla)","Istok i sjeveroistok (Višegrad, Tuzla)","الشرق والشمال الشرقي (فيشيغراد، توزلا)","Osten / Nordosten (Višegrad, Tuzla)"],OTH]],
+["B8","s",["Where did you mainly stay?","Gdje ste uglavnom boravili?","أين أقمت غالبًا؟","Wo haben Sie hauptsächlich übernachtet?"],[["Hotel","Hotel","فندق","Hotel"],["Apartment or holiday rental","Apartman ili najam","شقة أو إيجار سياحي","Ferienwohnung / Apartment"],["Hostel or guesthouse","Hostel ili pansion","نُزل أو بيت ضيافة","Hostel oder Pension"],["Property I own","Moja nekretnina","عقار أملكه","Eigene Immobilie"],["Home of friends or relatives","Kod prijatelja ili rodbine","منزل أصدقاء أو أقارب","Bei Freunden / Verwandten"],OTH]],
+["B9","s",["How was the trip organised?","Kako je putovanje organizovano?","كيف نُظمت الرحلة؟","Wie wurde die Reise organisiert?"],[["Independently","Samostalno","بشكل مستقل","Selbst organisiert"],["Package tour","Paket-aranžman","رحلة شاملة","Pauschalreise"],["Tailor-made via agency","Po mjeri preko agencije","ترتيب مخصص عبر وكالة","Maßgeschneidert über Agentur"]]],
+["B10","m",["Main information sources (up to three)","Glavni izvori informacija (do tri)","مصادر المعلومات الرئيسية (حتى ثلاثة)","Wichtigste Informationsquellen (bis zu drei)"],[["Friends and relatives","Prijatelji i rodbina","الأصدقاء والأقارب","Freunde und Verwandte"],["Social media and influencers","Društvene mreže i influenseri","وسائل التواصل والمؤثرون","Soziale Medien und Influencer"],["Search engines and websites","Pretraživači i web stranice","محركات البحث والمواقع","Suchmaschinen und Websites"],["Booking and review platforms","Platforme za rezervacije i recenzije","منصات الحجز والتقييم","Buchungs- und Bewertungsplattformen"],["Travel agency or tour operator","Turistička agencija","وكالة أو منظم رحلات","Reisebüro oder Veranstalter"],["Previous visits","Prethodne posjete","زيارات سابقة","Frühere Besuche"],OTH],3]]},
+{t:["Why that month?","Zašto taj mjesec?","لماذا ذلك الشهر؟","Warum dieser Monat?"],q:[["C","l",["I travelled in that month because…","Putovao/la sam u tom mjesecu jer…","سافرت في ذلك الشهر لأن…","Ich bin in diesem Monat gereist, weil…"],[
+["it fitted my school holidays or work leave","mi je odgovaralo zbog školskog raspusta ili godišnjeg odmora","ناسب عطلتي الدراسية أو إجازتي","es zu meinen Schulferien bzw. meinem Urlaub passte"],
+["the weather was favourable","je vrijeme bilo povoljno","كان الطقس مناسبًا","das Wetter günstig war"],
+["I wanted to escape the heat in my home country","sam htio/htjela pobjeći od vrućine u svojoj zemlji","أردت الهروب من حرارة بلدي","ich der Hitze in meinem Heimatland entfliehen wollte"],
+["it coincided with a religious or public holiday (e.g., Eid)","se poklopilo s vjerskim ili državnim praznikom (npr. Bajram)","صادف عطلة دينية أو رسمية (مثل العيد)","es mit einem religiösen oder gesetzlichen Feiertag (z. B. Eid) zusammenfiel"],
+["of an event, festival or activity season (e.g., skiing)","zbog događaja, festivala ili sezone aktivnosti (npr. skijanje)","بسبب فعالية أو مهرجان أو موسم نشاط (مثل التزلج)","wegen einer Veranstaltung, eines Festivals oder einer Aktivitätssaison (z. B. Skifahren)"],
+["flights and accommodation were cheaper","su letovi i smještaj bili jeftiniji","كانت الرحلات والإقامة أرخص","Flüge und Unterkünfte günstiger waren"],
+["convenient flights or transport were available","su postojale povoljne letačke ili prijevozne veze","توفرت رحلات أو مواصلات مناسبة","günstige Flug- oder Verkehrsverbindungen bestanden"],
+["friends or relatives were available","su prijatelji ili rodbina bili dostupni","كان الأصدقاء أو الأقارب متاحين","Freunde oder Verwandte Zeit hatten"]]]]},
+{t:["Motivation","Motivacija","الدافع","Motivation"],q:[["D","l",["I visited B&H because…","Posjetio/la sam BiH jer…","زرت البوسنة والهرسك لأن…","Ich habe BiH besucht, weil…"],[
+["of its natural scenery","me privukla priroda i pejzaži","انجذبت إلى مناظرها الطبيعية","mich die Natur und Landschaften angezogen haben"],
+["I wanted to experience local culture and traditions","sam htio/htjela upoznati lokalnu kulturu i tradiciju","أردت التعرف على الثقافة والتقاليد المحلية","ich lokale Kultur und Traditionen erleben wollte"],
+["historical sites and monuments attracted me","su me privukla historijska mjesta i spomenici","جذبتني المواقع التاريخية والمعالم","mich historische Stätten und Denkmäler interessierten"],
+["I wanted to relax and escape my daily routine","sam se htio/htjela opustiti i pobjeći od svakodnevice","أردت الاسترخاء والابتعاد عن الروتين","ich entspannen und dem Alltag entfliehen wollte"],
+["the climate and weather suited me","mi je klima odgovarala","ناسبني المناخ والطقس","mir das Klima zusagte"],
+["I like outdoor and adventure activities (hiking, rafting, skiing)","volim outdoor i avanturističke aktivnosti (planinarenje, rafting, skijanje)","أحب الأنشطة الخارجية والمغامرات (المشي، التجديف، التزلج)","ich Outdoor- und Abenteueraktivitäten (Wandern, Rafting, Skifahren) mag"],
+["it is an affordable destination","je odredište povoljno","الوجهة بأسعار مناسبة","das Reiseziel erschwinglich ist"],
+["family or friends recommended it","su je preporučili porodica ili prijatelji","أوصى بها أهلي أو أصدقائي","Familie oder Freunde es empfohlen haben"],
+["social media and online content inspired me","su me inspirisale društvene mreže i online sadržaji","ألهمتني وسائل التواصل والمحتوى الإلكتروني","soziale Medien und Online-Inhalte mich inspiriert haben"],
+["I wanted to visit religious or spiritual sites","sam htio/htjela posjetiti vjerske ili duhovne lokalitete","أردت زيارة مواقع دينية أو روحية","ich religiöse oder spirituelle Stätten besuchen wollte"],
+["halal-friendly services (food, prayer facilities) are available","su dostupne halal usluge (hrana, prostor za molitvu)","تتوفر خدمات حلال (طعام، أماكن صلاة)","Halal-Angebote (Essen, Gebetsräume) verfügbar sind"],
+["I wanted to use spa and wellness facilities","sam htio/htjela koristiti spa i wellness","أردت استخدام السبا والمنتجعات الصحية","ich Spa und Wellness nutzen wollte"],
+["I wanted to see friends or relatives who live in B&H","sam htio/htjela posjetiti prijatelje ili rodbinu u BiH","أردت زيارة أصدقاء أو أقارب يقيمون فيها","ich Freunde oder Verwandte in BiH besuchen wollte"]]]]},
+{t:["Image of B&H","Slika o BiH","صورة البوسنة والهرسك","Image von BiH"],q:[["E","l",["In my opinion, B&H…","Po mom mišljenju, BiH…","في رأيي، البوسنة والهرسك…","Meiner Meinung nach…"],[
+["is a safe destination","je sigurna destinacija","وجهة آمنة","ist BiH ein sicheres Reiseziel"],
+["has beautiful landscapes and nature","ima prekrasne pejzaže i prirodu","تتمتع بمناظر طبيعية جميلة","hat BiH wunderschöne Landschaften und Natur"],
+["has rich cultural and historical attractions","ima bogate kulturne i historijske atrakcije","تتميز بمعالم ثقافية وتاريخية غنية","hat BiH reiche kulturelle und historische Attraktionen"],
+["offers good value for money","nudi dobru vrijednost za novac","تقدم قيمة جيدة مقابل المال","bietet BiH ein gutes Preis-Leistungs-Verhältnis"],
+["has adequate tourism infrastructure","ima odgovarajuću turističku infrastrukturu","لديها بنية تحتية سياحية كافية","hat BiH eine ausreichende touristische Infrastruktur"],
+["is welcoming to visitors like me","je gostoljubiva prema posjetiocima poput mene","ترحب بزوار مثلي","ist BiH für Besucher wie mich einladend"],
+["has a positive image in my home country","ima pozitivnu sliku u mojoj zemlji","لها صورة إيجابية في بلدي","hat BiH in meinem Heimatland ein positives Image"],
+["is attractive outside peak summer (Oct–May)","je atraktivna i izvan ljeta (okt–maj)","جذابة خارج ذروة الصيف (أكتوبر–مايو)","ist BiH auch außerhalb des Hochsommers (Okt–Mai) attraktiv"],
+["offers plenty to do all year round","nudi mnogo sadržaja tokom cijele godine","تقدم أنشطة متنوعة طوال العام","bietet BiH das ganze Jahr viele Aktivitäten"]]]]},
+{t:["Satisfaction","Zadovoljstvo","الرضا","Zufriedenheit"],q:[["F","l",["I was satisfied with…","Bio/la sam zadovoljan/na…","كنت راضيًا عن…","Ich war zufrieden mit…"],[
+["the quality of accommodation","kvalitetom smještaja","جودة الإقامة","der Qualität der Unterkunft"],
+["restaurants and food","restoranima i hranom","المطاعم والطعام","den Restaurants und dem Essen"],
+["food that meets my dietary or religious needs (e.g., halal)","hranom prema mojim potrebama (npr. halal)","توفر طعام يناسب احتياجاتي (مثل الحلال)","Speisen für meine Bedürfnisse (z. B. halal)"],
+["transport and accessibility","prijevozom i dostupnošću","المواصلات وسهولة الوصول","Verkehr und Erreichbarkeit"],
+["tourist information and signage","turističkim informacijama i signalizacijom","المعلومات السياحية واللافتات","Touristeninformation und Beschilderung"],
+["cleanliness of tourist places","čistoćom turističkih mjesta","نظافة الأماكن السياحية","der Sauberkeit der Touristenorte"],
+["hospitality of local people","gostoljubivošću lokalnog stanovništva","حسن ضيافة السكان المحليين","der Gastfreundschaft der Einheimischen"],
+["safety and security","sigurnošću","الأمن والسلامة","der Sicherheit"],
+["value for the money I spent","vrijednošću za novac","القيمة مقابل ما أنفقت","dem Preis-Leistungs-Verhältnis"],
+["my visit overall","cjelokupnom posjetom BiH","زيارتي بشكل عام","meinem Besuch insgesamt"],
+["how well my visit met my expectations","ispunjenošću mojih očekivanja","مدى تحقق توقعاتي","der Erfüllung meiner Erwartungen"]]]]},
+{t:["Visiting outside peak summer","Posjeta izvan ljeta","الزيارة خارج ذروة الصيف","Reisen außerhalb des Hochsommers"],q:[
+["G","l",["I would be less likely to visit in the off-season (Oct–May) because…","Manje bih vjerovatno posjetio/la BiH izvan sezone (okt–maj) jer…","سأكون أقل ميلًا للزيارة خارج الموسم (أكتوبر–مايو) لأن…","Ich würde außerhalb der Saison (Okt–Mai) seltener reisen, weil…"],[
+["the weather is less favourable","je vrijeme manje povoljno","الطقس أقل ملاءمة","das Wetter weniger günstig ist"],
+["fewer attractions and facilities are open","je manje atrakcija i sadržaja otvoreno","عدد أقل من المعالم والمرافق مفتوح","weniger Attraktionen und Angebote geöffnet sind"],
+["there are fewer flights and transport links","ima manje letova i prijevoznih veza","الرحلات والمواصلات أقل","es weniger Flug- und Verkehrsverbindungen gibt"],
+["my work, school or family calendar does not allow it","mi raspored posla, škole ili porodice to ne dozvoljava","جدول عملي أو دراستي أو عائلتي لا يسمح","mein Arbeits-, Schul- oder Familienkalender es nicht erlaubt"],
+["there is too little information on what B&H offers outside summer","ima premalo informacija o ponudi izvan ljeta","المعلومات عما تقدمه خارج الصيف قليلة","es zu wenig Informationen zum Angebot außerhalb des Sommers gibt"],
+["there are fewer suitable services (e.g., halal, my language)","ima manje usluga prilagođenih meni (npr. halal, moj jezik)","الخدمات المناسبة لي (مثل الحلال أو لغتي) أقل","es weniger passende Angebote gibt (z. B. halal, meine Sprache)"]],1],
+["G","l",["I would be more likely to visit in the off-season if…","Vjerovatnije bih posjetio/la BiH izvan sezone ako bi…","سأكون أكثر ميلًا للزيارة خارج الموسم إذا…","Ich würde außerhalb der Saison eher reisen, wenn…"],[
+["flight and accommodation prices were lower","cijene letova i smještaja bile niže","كانت أسعار الرحلات والإقامة أقل","Flüge und Unterkünfte günstiger wären"],
+["city and cultural events were offered","se nudili gradski i kulturni događaji","قُدمت فعاليات مدنية وثقافية","Stadt- und Kulturveranstaltungen angeboten würden"],
+["winter sports and snow activities were available","bile dostupne zimske sportske aktivnosti","توفرت رياضات الشتاء والثلج","Wintersport und Schneeaktivitäten verfügbar wären"],
+["spa and wellness packages were offered","se nudili spa i wellness paketi","عُرضت باقات السبا والاستجمام","Spa- und Wellnesspakete angeboten würden"],
+["nature and rural-tourism packages for spring or autumn were offered","se nudili paketi prirode i ruralnog turizma za proljeće i jesen","عُرضت باقات الطبيعة والسياحة الريفية للربيع والخريف","Natur- und Landtourismus-Pakete für Frühling und Herbst angeboten würden"],
+["direct flights and better transport were available","postojali direktni letovi i bolji prijevoz","توفرت رحلات مباشرة ومواصلات أفضل","es Direktflüge und besseren Transport gäbe"]],7]]},
+{t:["Revisit and suggestions","Ponovna posjeta i prijedlozi","إعادة الزيارة والاقتراحات","Wiederbesuch und Vorschläge"],q:[
+["H","l",["","","",""],[
+["I intend to revisit B&H","Namjeravam ponovo posjetiti BiH","أنوي زيارة البوسنة والهرسك مرة أخرى","Ich beabsichtige, BiH erneut zu besuchen"],
+["I would recommend B&H to friends and family","Preporučio/la bih BiH prijateljima i porodici","سأوصي أصدقائي وعائلتي بزيارتها","Ich würde BiH Freunden und Familie empfehlen"],
+["I would choose B&H again over similar destinations","Opet bih izabrao/la BiH umjesto sličnih destinacija","سأختارها مجددًا بدل وجهات مشابهة","Ich würde BiH wieder gegenüber ähnlichen Reisezielen wählen"]],1],
+["H","l",["I would consider visiting B&H…","Razmotrio/la bih posjetu BiH…","سأفكر في زيارة البوسنة والهرسك…","Ich würde einen Besuch in BiH erwägen…"],[
+["in spring (March–May)","u proljeće (mart–maj)","في الربيع (مارس–مايو)","im Frühling (März–Mai)"],
+["in autumn (October–November)","u jesen (oktobar–novembar)","في الخريف (أكتوبر–نوفمبر)","im Herbst (Oktober–November)"],
+["in winter (December–February)","u zimu (decembar–februar)","في الشتاء (ديسمبر–فبراير)","im Winter (Dezember–Februar)"]],4],
+["I1","x",["Which services or attractions most need improvement? (optional)","Koje usluge ili atrakcije najviše trebaju poboljšanje? (neobavezno)","ما الخدمات أو المعالم التي تحتاج أكثر إلى تحسين؟ (اختياري)","Welche Angebote oder Attraktionen sollten am dringendsten verbessert werden? (optional)"]],
+["I2","x",["What one thing would most encourage you to visit outside peak summer (Oct–May)? (optional)","Šta bi vas najviše podstaklo da posjetite BiH izvan ljeta (okt–maj)? (neobavezno)","ما الشيء الذي سيشجعك أكثر على الزيارة خارج ذروة الصيف (أكتوبر–مايو)؟ (اختياري)","Was würde Sie am meisten motivieren, außerhalb des Hochsommers (Okt–Mai) zu reisen? (optional)"]]]}];
+const SCR=[["S1",["Are you 18 or older?","Imate li 18 ili više godina?","هل عمرك 18 عامًا أو أكثر؟","Sind Sie mindestens 18 Jahre alt?"],"Yes"],["S2",["Do you currently live in B&H?","Živite li trenutno u BiH?","هل تقيم حاليًا في البوسنة والهرسك؟","Leben Sie derzeit in BiH?"],"No"],["S3",["Have you visited B&H within the last 12 months (or are you there now)?","Jeste li posjetili BiH u posljednjih 12 mjeseci (ili ste sada u posjeti)?","هل زرت البوسنة والهرسك خلال آخر 12 شهرًا (أو أنت فيها الآن)؟","Waren Sie in den letzten 12 Monaten in BiH (oder sind Sie gerade dort)?"],"Yes"]];
+
+let li=0,step=0,ans={},sent=false;
+const $=id=>document.getElementById(id),t=a=>a[li];
+function detect(){const q=new URLSearchParams(location.search).get('lang');if(LG.includes(q))return LG.indexOf(q);
+ const map={en:0,bs:1,hr:1,sr:1,ar:2,de:3};for(const l of (navigator.languages||[navigator.language||'en'])){const k=l.slice(0,2).toLowerCase();if(k in map)return map[k]}return 0}
+function opts(name,list,type,id){return list.map((o,i)=>`<label class="opt"><input type="${type}" name="${name}" value="${o[0]}" ${(type=='radio'?ans[id]===o[0]:(ans[id]||'').split('; ').includes(o[0]))?'checked':''}><span>${t(o)}</span></label>`).join('')}
+function renderQ(q){const[id,ty,lab,o,req]=q;const r=req===1?' req':'';
+ if(ty=='l'){const pre=id,st=o?t(lab):'';let h=`<div class="stem">${t(lab)}</div>`;const start=q[4]||1;
+  return h+q[3].map((it,i)=>{const k=pre+(i+start);return `<div class="li"><p>${t(it)}</p><div class="sc" role="radiogroup" aria-label="${k}">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="${k}" value="${v}" ${ans[k]==v?'checked':''}><span>${v}</span></label>`).join('')}</div></div>`}).join('')}
+ if(ty=='sel')return `<div class="q"><label class="t${r}" for="${id}">${t(lab)}</label><select id="${id}" name="${id}"><option value="">${t(UI.sel)}</option>${o.map(x=>`<option value="${x[0]}" ${ans[id]===x[0]?'selected':''}>${t(x)}</option>`).join('')}</select></div>`;
+ if(ty=='n')return `<div class="q"><label class="t" for="${id}">${t(lab)}</label><input type="number" min="0" max="365" id="${id}" name="${id}" value="${ans[id]||''}"></div>`;
+ if(ty=='x')return `<div class="q"><label class="t" for="${id}">${t(lab)}</label><textarea rows="3" id="${id}" name="${id}">${ans[id]||''}</textarea></div>`;
+ return `<fieldset class="q"><legend class="${r}">${t(lab)}</legend>${opts(id,o,ty=='m'?'checkbox':'radio',id)}</fieldset>`}
+function draw(){document.documentElement.lang=LG[li];document.documentElement.dir=li==2?'rtl':'ltr';$('ttl').textContent=t(UI.ttl);document.title=t(UI.ttl);
+ $('lang').innerHTML=LG.map((c,i)=>`<button type="button" aria-pressed="${i==li}" data-l="${i}">${NAMES[c]}</button>`).join('');
+ $('bar').style.width=(step/PAGES.length*100)+'%';let h='';
+ if(step==-1)h=`<p>${t(UI.thx)}</p>`;else if(step==-2)h=`<p>${t(UI.no)}</p>`;
+ else if(step==0){h=`<p>${t(UI.intro)}</p>`+SCR.map(s=>`<fieldset class="q"><legend class="req">${t(s[1])}</legend>${opts(s[0],YN,'radio',s[0])}</fieldset>`).join('')+`<label class="opt"><input type="checkbox" id="cons" ${ans.cons?'checked':''}><span>${t(UI.cons)}</span></label><div class="nav"><span></span><button class="btn" data-go="1" type="button">${t(UI.start)}</button></div>`}
+ else{const p=PAGES[step-1];h=`<h2>${t(p.t)}</h2>`+p.q.map(renderQ).join('')+`<input class="hp" tabindex="-1" autocomplete="off" name="website" aria-hidden="true"><div class="nav"><button class="btn g" data-go="-1" type="button">${t(UI.back)}</button><button class="btn" data-go="1" id="nx" type="button">${t(step==PAGES.length?UI.send:UI.next)}</button></div>`}
+ $('card').innerHTML=h+'<div class="msg" id="msg" role="alert"></div>'}
+function collect(){document.querySelectorAll('#card input:not(.hp),#card select,#card textarea').forEach(e=>{const n=e.name||e.id;if(e.type=='radio'){if(e.checked)ans[n]=/^[A-Z]\d+$/.test(n)&&e.closest('.sc')?+e.value:e.value}else if(e.type=='checkbox'){if(e.id=='cons'){ans.cons=e.checked}else{const L=[...document.querySelectorAll(`input[name="${n}"]:checked`)].map(x=>x.value);ans[n]=L.join('; ')}}else ans[n]=e.value})}
+function valid(){const m=$('msg');if(step==0){if(!(SCR.every(s=>ans[s[0]])&&ans.cons)){m.textContent=t(UI.req);return false}return true}
+ const p=PAGES[step-1];for(const q of p.q){if(q[4]===1&&q[1]!='l'&&!ans[q[0]]){m.textContent=t(UI.req);return false}
+  if(q[1]=='l'&&q[4]!==undefined){/* likert: no hard requirement */}
+  if(q[1]=='m'&&q[4]>1&&(ans[q[0]]||'').split('; ').filter(Boolean).length>q[4]){m.textContent=t(UI.req);return false}}return true}
+async function submit(){const b=$('nx');b.disabled=true;$('msg').textContent=t(["Sending…","Slanje…","جارٍ الإرسال…","Wird gesendet…"]);
+ if(document.querySelector('.hp').value){step=-1;draw();return}
+ const row={submitted_at:new Date().toISOString(),language:LG[li],...ans};delete row.cons;
+ try{if(!ENDPOINT.startsWith('http'))throw 0;await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});step=-1;draw();$('bar').style.width='100%'}
+ catch(e){b.disabled=false;$('msg').textContent=t(UI.err)}}
+document.addEventListener('click',e=>{const l=e.target.closest('[data-l]');if(l){collect();li=+l.dataset.l;draw();return}
+ const g=e.target.closest('[data-go]');if(!g)return;collect();const d=+g.dataset.go;
+ if(d>0){if(!valid())return;if(step==0&&(ans.S1!='Yes'||ans.S2!='No'||ans.S3!='Yes')){step=-2;draw();return}if(step==PAGES.length){submit();return}}
+ step+=d;draw();scrollTo(0,0)});
+li=detect();draw();
+</script>
+</body>
+</html>
