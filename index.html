@@ -178,11 +178,15 @@ function valid(){const m=$('msg');if(step==0){if(!(SCR.every(s=>ans[s[0]])&&ans.
  const p=PAGES[step-1];for(const q of p.q){if(q[4]===1&&q[1]!='l'&&!ans[q[0]]){m.textContent=t(UI.req);return false}
   if(q[1]=='l'&&q[4]!==undefined){/* likert: no hard requirement */}
   if(q[1]=='m'&&q[4]>1&&(ans[q[0]]||'').split('; ').filter(Boolean).length>q[4]){m.textContent=t(UI.req);return false}}return true}
+let sid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2);
 async function submit(){const b=$('nx');b.disabled=true;$('msg').textContent=t(["Sending…","Slanje…","جارٍ الإرسال…","Wird gesendet…"]);
  if(document.querySelector('.hp').value){step=-1;draw();return}
- const row={submitted_at:new Date().toISOString(),language:LG[li],...ans};delete row.cons;
- try{if(!ENDPOINT.startsWith('http'))throw 0;await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});step=-1;draw();$('bar').style.width='100%'}
- catch(e){b.disabled=false;$('msg').textContent=t(UI.err)}}
+ const row={submission_id:sid,submitted_at:new Date().toISOString(),language:LG[li],...ans};delete row.cons;
+ try{if(!ENDPOINT.startsWith('http'))throw new Error('ENDPOINT not set in index.html');
+  const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});
+  const x=await r.text();if(!x.startsWith('ok'))throw new Error(x.replace(/<[^>]*>/g,' ').slice(0,160));
+  step=-1;draw();$('bar').style.width='100%'}
+ catch(e){b.disabled=false;$('msg').textContent=t(UI.err)+' ['+e.message+']'}}
 document.addEventListener('click',e=>{const l=e.target.closest('[data-l]');if(l){collect();li=+l.dataset.l;draw();return}
  const g=e.target.closest('[data-go]');if(!g)return;collect();const d=+g.dataset.go;
  if(d>0){if(!valid())return;if(step==0&&(ans.S1!='Yes'||ans.S2!='No'||ans.S3!='Yes')){step=-2;draw();return}if(step==PAGES.length){submit();return}}
