@@ -2,290 +2,1496 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1f5f6b">
+<meta name="referrer" content="no-referrer">
 <title>Your Visit to Bosnia and Herzegovina</title>
 <style>
-:root{--bg:#f3f6f7;--card:#fff;--ink:#1b2a33;--mut:#5b6b73;--line:#d3dce0;--acc:#1f5f6b;--acc2:#e3f0f2;--err:#b3261e}
-@media(prefers-color-scheme:dark){:root{--bg:#0f181d;--card:#17232a;--ink:#e8eef1;--mut:#9fb0b8;--line:#2c3d46;--acc:#6fc0cf;--acc2:#1d3640;--err:#ff8f85}}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+/*
+  Targeted revision of the original survey.
+  Original visual design retained.
+  No external scripts, fonts, analytics or persistent answer storage.
+*/
+:root{
+  --bg:#f3f6f7;--card:#fff;--ink:#1b2a33;--mut:#5b6b73;
+  --line:#d3dce0;--acc:#1f5f6b;--acc2:#e3f0f2;--err:#b3261e;
+  --button-ink:#fff
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f181d;--card:#17232a;--ink:#e8eef1;--mut:#b2c1c8;
+    --line:#40535d;--acc:#6fc0cf;--acc2:#1d3640;--err:#ff8f85;
+    --button-ink:#10252a
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f181d;--card:#17232a;--ink:#e8eef1;--mut:#b2c1c8;
+  --line:#40535d;--acc:#6fc0cf;--acc2:#1d3640;--err:#ff8f85;
+  --button-ink:#10252a
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.55 system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif
+}
 :lang(ar) body,body:lang(ar){line-height:1.85}
 main{max-width:680px;margin:0 auto;padding:14px 14px 40px}
-.top{display:flex;justify-content:flex-end}
-.lang{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
-.lang button{border:0;background:transparent;color:var(--ink);padding:9px 12px;font:inherit;font-size:.92rem;cursor:pointer;min-height:44px}
+.top{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
+.lang{
+  display:inline-flex;border:1px solid var(--line);border-radius:10px;
+  overflow:hidden;background:var(--card)
+}
+.lang button{
+  border:0;background:transparent;color:var(--ink);padding:9px 12px;
+  font:inherit;font-size:.92rem;cursor:pointer;min-height:44px
+}
 .lang button+button{border-inline-start:1px solid var(--line)}
-.lang button[aria-pressed=true]{background:var(--acc);color:#fff}
+.lang button[aria-pressed=true]{background:var(--acc);color:var(--button-ink)}
 h1{font:600 1.55rem/1.25 Georgia,"Times New Roman",serif;margin:16px 0 2px}
 :lang(ar) h1,:lang(ar) h2{font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",serif}
-h2{font:600 1.25rem/1.3 Georgia,"Times New Roman",serif;margin:0 0 14px;outline:0}
+h2{font:600 1.25rem/1.3 Georgia,"Times New Roman",serif;margin:0 0 14px}
 .sub{color:var(--mut);margin:0 0 12px}
-.prog{margin:8px 0 16px}.prog small{color:var(--mut);display:block;margin-bottom:6px;min-height:1.2em}
-.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 16px 0}
+.prog{margin:8px 0 16px}
+.prog small{color:var(--mut);display:block;margin-bottom:6px;min-height:1.2em}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .3s}
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:18px 16px 0
+}
 .q{margin:0 0 24px;border:0;padding:0;min-width:0}
-.q>legend,.q>label.t{font-weight:600;display:block;margin-bottom:10px;padding:0}
+.q>legend,.q>label.t{
+  font-weight:600;display:block;margin-bottom:10px;padding:0
+}
 .req::after{content:" *";color:var(--err)}
-.opt{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer;min-height:48px;background:var(--bg)}
+.opt{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border:1px solid var(--line);border-radius:10px;margin-bottom:8px;
+  cursor:pointer;min-height:48px;background:var(--bg)
+}
 .opt:has(input:checked){border-color:var(--acc);background:var(--acc2)}
 .opt input{width:20px;height:20px;flex:none;accent-color:var(--acc);margin:0}
-select,input[type=number],textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;min-height:48px}
+select,input[type=number],textarea{
+  width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:10px;background:var(--bg);color:var(--ink);
+  font:inherit;font-size:16px;min-height:48px
+}
 .stem{font-weight:600;margin:6px 0 4px}
-.li{padding:14px 0;border-top:1px solid var(--line)}.li p{margin:0 0 10px}
+.li{padding:14px 0;border-top:1px solid var(--line)}
+.li p{margin:0 0 10px}
 .sc{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
-.sc label{position:relative}.sc input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
-.sc span{display:flex;align-items:center;justify-content:center;min-height:48px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font-weight:600}
-.sc input:checked+span{background:var(--acc);color:#fff;border-color:var(--acc)}
-.ends{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;color:var(--mut);margin-top:6px}
-.sc input:focus-visible+span,.opt:has(input:focus-visible),button:focus-visible,select:focus-visible,textarea:focus-visible,input[type=number]:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.sc label{position:relative}
+.sc input{
+  position:absolute;opacity:0;inset:0;width:100%;height:100%;
+  margin:0;cursor:pointer
+}
+.sc span{
+  display:flex;align-items:center;justify-content:center;
+  min-height:48px;border:1px solid var(--line);border-radius:10px;
+  background:var(--bg);font-weight:600
+}
+.sc input:checked+span{
+  background:var(--acc);color:var(--button-ink);border-color:var(--acc)
+}
+.ends{
+  display:flex;justify-content:space-between;gap:8px;
+  font-size:.82rem;color:var(--mut);margin-top:6px
+}
+.sc input:focus-visible+span,.opt:has(input:focus-visible),
+button:focus-visible,select:focus-visible,textarea:focus-visible,
+input[type=number]:focus-visible,a:focus-visible{
+  outline:3px solid var(--acc);outline-offset:2px
+}
 .miss{outline:2px solid var(--err);outline-offset:6px;border-radius:8px}
 .note{background:var(--acc2);border-radius:10px;padding:12px 14px;margin:14px 0}
-ul.pts{padding-inline-start:20px;margin:10px 0}ul.pts li{margin:4px 0}
+ul.pts{padding-inline-start:20px;margin:10px 0}
+ul.pts li{margin:4px 0}
 .msg{color:var(--err);font-weight:600;min-height:1.2em;padding-bottom:4px}
-.nav{position:sticky;bottom:0;display:flex;gap:10px;background:var(--card);padding:12px 0 calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);margin-top:8px}
-.btn{flex:1;padding:13px 20px;min-height:50px;border-radius:10px;border:1px solid var(--acc);background:var(--acc);color:#fff;font:inherit;font-weight:600;cursor:pointer}
-.btn.g{background:transparent;color:var(--acc);flex:0 0 34%}.btn:disabled{opacity:.55}
-.done{text-align:center;padding:26px 6px 34px}.done svg{width:64px;height:64px;color:var(--acc)}
+.nav{
+  position:sticky;bottom:0;display:flex;gap:10px;
+  background:var(--card);padding:12px 0 calc(12px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);margin-top:8px
+}
+.btn{
+  flex:1;padding:13px 20px;min-height:50px;border-radius:10px;
+  border:1px solid var(--acc);background:var(--acc);color:var(--button-ink);
+  font:inherit;font-weight:600;cursor:pointer
+}
+.btn.g{background:transparent;color:var(--acc);flex:0 0 34%}
+.btn:disabled{opacity:.55;cursor:wait}
+.done{text-align:center;padding:26px 6px 34px}
+.done svg{width:64px;height:64px;color:var(--acc)}
 .hp{position:absolute;left:-9999px}
-@media(min-width:700px){body{font-size:18px}.card{padding:28px 30px 0}main{padding-top:28px}.btn{flex:0 0 auto;min-width:160px}.nav{justify-content:space-between}}
+.help{font-size:.85rem;color:var(--mut);margin:6px 0 10px}
+.extra{margin-top:10px}
+.extra .opt{font-size:.9rem;padding:9px 12px}
+.minor{
+  border:1px solid var(--line);background:var(--card);
+  color:var(--ink);border-radius:8px;min-height:44px;
+  padding:8px 12px;font:inherit;font-size:.85rem;cursor:pointer
+}
+.clear{
+  border:0;background:transparent;color:var(--acc);
+  text-decoration:underline;min-height:44px;padding:4px 0;
+  font:inherit;font-size:.85rem;cursor:pointer
+}
+details{margin:14px 0}
+summary{cursor:pointer;font-weight:600;min-height:44px;padding:8px 0}
+dl{margin:12px 0}
+dt{font-weight:600;margin-top:12px}
+dd{margin:4px 0 0;white-space:pre-line;overflow-wrap:anywhere}
+.receipt{
+  direction:ltr;display:block;overflow-wrap:anywhere;
+  background:var(--bg);padding:12px;border-radius:8px;margin:12px 0
+}
+.footer{font-size:.82rem;color:var(--mut);margin-top:16px}
+.skip{
+  position:absolute;top:-100px;inset-inline-start:10px;
+  background:var(--card);color:var(--acc);padding:12px;z-index:10
+}
+.skip:focus{top:10px}
+[hidden]{display:none!important}
+a{color:var(--acc)}
+@media(min-width:700px){
+  body{font-size:18px}.card{padding:28px 30px 0}
+  main{padding-top:28px}.btn{flex:0 0 auto;min-width:160px}
+  .nav{justify-content:space-between}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#card" id="skip"></a>
 <main>
-<div class="top"><div class="lang" id="lang" role="group" aria-label="Language"></div></div>
-<h1 id="ttl"></h1><p class="sub" id="sub"></p>
-<div class="prog" id="prog"><small id="stp"></small><div class="bar" aria-hidden="true"><i id="bar"></i></div></div>
-<div class="card" id="card"></div>
-<noscript>Please enable JavaScript to take this survey.</noscript>
+  <div class="top">
+    <div class="lang" id="lang" role="group" aria-label="Language"></div>
+    <button class="minor" id="theme" type="button"></button>
+  </div>
+  <h1 id="ttl"></h1>
+  <p class="sub" id="sub"></p>
+  <div class="note help" id="status"></div>
+  <div class="prog" id="prog">
+    <small id="stp"></small>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  </div>
+  <div class="card" id="card"></div>
+  <div class="footer" id="footer"></div>
+  <noscript>Please enable JavaScript to take this survey.</noscript>
 </main>
+
 <script>
-/* ===== Your Google Apps Script Web App URL ===== */
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbwF1mkkXP3OMZCNWBEfANB_cBxPlZgH5un5GBKnquEpYmuBevxqqdNiSKaXG23lIqYt/exec";
-const REQUIRE_ALL = true;   /* true = every rating statement must be answered; false = rating statements may be skipped */
-/* =============================================== */
-const LG=['en','ar','de','tr'],NAMES=['English','العربية','Deutsch','Türkçe'];
-const N=s=>[s,s,s];
-const UI={
-ttl:["Your Visit to Bosnia and Herzegovina","زيارتك إلى البوسنة والهرسك","Ihr Besuch in Bosnien und Herzegowina"],
-sub:["Visitor survey","استبيان للزوار","Besucherumfrage"],
-hello:["Thank you for your interest in this research","شكرًا لاهتمامك بهذا البحث","Vielen Dank für Ihr Interesse an dieser Studie"],
-intro:["We want to understand why visitors choose Bosnia and Herzegovina (B&H), when they travel, and what would encourage them to return.","نريد أن نفهم لماذا يختار الزوار البوسنة والهرسك، ومتى يسافرون، وما الذي قد يشجعهم على العودة.","Wir möchten verstehen, warum Besucher Bosnien und Herzegowina (BiH) wählen, wann sie reisen und was sie zu einem erneuten Besuch bewegen würde."],
-pts:[["Takes about 10–15 minutes.","Anonymous and voluntary – we collect no names or contact details.","Part of an MBA thesis at International Burch University, Sarajevo."],["يستغرق نحو 10–15 دقيقة.","المشاركة طوعية ومجهولة؛ لا نجمع أسماء أو بيانات اتصال.","البحث جزء من رسالة ماجستير في إدارة الأعمال بجامعة إنترناشونال بورتش، سراييفو."],["Dauer: etwa 10–15 Minuten.","Freiwillig und anonym – wir erheben keine Namen oder Kontaktdaten.","Teil einer MBA-Abschlussarbeit an der International Burch University, Sarajevo."]],
-defs:["In this survey, “summer season” means June–September and “off-season” means October–May. Please answer the questions based on your most recent visit to B&H.","نقصد بـ«موسم الصيف» الفترة من يونيو إلى سبتمبر، وبـ«خارج الموسم» الفترة من أكتوبر إلى مايو. يرجى الإجابة عن الأسئلة بناءً على زيارتك الأخيرة إلى البوسنة والهرسك.","„Sommersaison“ bedeutet Juni–September, „Nebensaison“ Oktober–Mai. Bitte beziehen Sie sich auf Ihren letzten Besuch in BiH."],
-cons:["I am 18 or older and I agree to take part.","عمري 18 عامًا أو أكثر وأوافق على المشاركة.","Ich bin mindestens 18 Jahre alt und stimme der Teilnahme zu."],
-start:["Start the survey","ابدأ الاستبيان","Umfrage starten"],next:["Next","التالي","Weiter"],back:["Back","السابق","Zurück"],send:["Submit","إرسال","Absenden"],
-step:["Step {0} of {1}","الخطوة {0} من {1}","Schritt {0} von {1}"],
-req:["Please answer the highlighted questions.","يرجى الإجابة عن الأسئلة المميّزة.","Bitte beantworten Sie die markierten Fragen."],
-max:["You can choose up to 3.","يمكنك اختيار 3 كحد أقصى.","Sie können bis zu 3 auswählen."],
-thx:["Thank you!","شكرًا لك!","Vielen Dank!"],
-thx2:["Your answers have been saved. They will help improve tourism in Bosnia and Herzegovina.","تم حفظ إجاباتك، وستساهم في تطوير السياحة في البوسنة والهرسك.","Ihre Antworten wurden gespeichert und helfen, den Tourismus in Bosnien und Herzegowina weiterzuentwickeln."],
-no:["Thank you for your interest. This survey is only for people who live outside B&H and have visited it.","شكرًا لاهتمامك. هذا الاستبيان مخصص لمن يقيمون خارج البوسنة والهرسك وسبقت لهم زيارتها.","Danke für Ihr Interesse. Diese Umfrage richtet sich nur an Personen, die außerhalb von BiH leben und das Land besucht haben."],
-err:["We couldn’t save your answers. Check your connection and tap Submit again – nothing is lost.","تعذّر حفظ إجاباتك. تحقق من اتصالك بالإنترنت ثم اضغط «إرسال» مرة أخرى؛ إجاباتك لم تضع.","Ihre Antworten konnten nicht gespeichert werden. Bitte prüfen Sie die Verbindung und tippen Sie erneut auf „Absenden“ – nichts geht verloren."],
-sending:["Saving…","جارٍ الحفظ…","Wird gespeichert…"],sel:["Select…","اختر…","Auswählen…"]};
-const SC={a:[["Strongly disagree","Strongly agree"],["لا أوافق إطلاقًا","أوافق تمامًا"],["Stimme gar nicht zu","Stimme voll zu"]],s:[["Very dissatisfied","Very satisfied"],["غير راضٍ إطلاقًا","راضٍ تمامًا"],["Sehr unzufrieden","Sehr zufrieden"]]};
+"use strict";
+
+/* ============================================================
+   OWNER CONFIGURATION
+
+   Review mode:
+   - Opens the complete questionnaire.
+   - Does not send answers.
+   - Does not claim to save research responses.
+
+   Live mode:
+   - Set MODE to "live".
+   - Complete ALL INFO values in English, Arabic and German.
+   - Confirm the three approval/testing flags.
+   - Test the existing Apps Script and database.
+   - Only then publish the public participant URL.
+
+   No claim of university approval or legal certification is made.
+
+   Visit-period examples:
+     VISIT_START: null, VISIT_END: null
+       = no historical cutoff; future months are rejected.
+
+     VISIT_START: "2013-01", VISIT_END: "2025-12"
+       = visits beginning within that fixed window.
+
+   Changing the visit period requires supervisor agreement.
+   It is NOT automatically restricted to the last 12 months.
+
+   Existing question IDs and numeric rating codes are retained.
+   New fields:
+     S4                     current/completed visit
+     sensitive_consent      separate optional consent
+     instrument_version
+     notice_version
+     visit_window_start
+     visit_window_end
+
+   Backend requirements:
+   - Validate data and eligibility on the server.
+   - Deduplicate submission_id.
+   - Save before returning "ok".
+   - Support NA, DK, PNTS and additional fields.
+   - Never interpret NA/DK/PNTS/blanks as numeric zero.
+   ============================================================ */
+
+const ENDPOINT =
+"https://script.google.com/macros/s/AKfycbwF1mkkXP3OMZCNWBEfANB_cBxPlZgH5un5GBKnquEpYmuBevxqqdNiSKaXG23lIqYt/exec";
+
+const CONFIG = {
+  MODE: "review",
+  INSTRUMENT_VERSION: "original-preserved-1.0",
+  NOTICE_VERSION: "2026-10-28-1",
+
+  VISIT_START: null,
+  VISIT_END: null,
+
+  ETHICS_APPROVAL_CONFIRMED: false,
+  PRIVACY_REVIEW_CONFIRMED: false,
+  BACKEND_TEST_CONFIRMED: false,
+
+  /*
+    Each array is [English, Arabic, German].
+    Supply institution-approved wording, not guessed information.
+    The original affiliation is retained below, but that does not
+    establish the university as the legal data controller.
+  */
+  INFO: {
+    controller: ["", "", ""],
+    researcher: ["", "", ""],
+    supervisor: ["", "", ""],
+    contact: ["", "", ""],
+    dataProtectionContact: ["", "", ""],
+    legalBasis: ["", "", ""],
+    recipients: ["", "", ""],
+    hostingTransfers: ["", "", ""],
+    retention: ["", "", ""],
+    rightsComplaints: ["", "", ""],
+    withdrawal: ["", "", ""]
+  }
+};
+
+/*
+  Rating statements can be skipped.
+  The 1–5 scales are unchanged; additional nonnumeric choices
+  are stored separately as NA, DK or PNTS.
+*/
+const REQUIRE_ALL = false;
+
+const LG = ["en","ar","de"];
+const NAMES = ["English","العربية","Deutsch"];
+const N = s => [s,s,s];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+let li=0,step=0,ans={},t0=Date.now(),busy=false;
+let submissionAttempted=false,pendingRow=null,receipt="";
+let themeOverride=null;
+
+function t(a){
+  if(Array.isArray(a)) return a[li] ?? a[0] ?? "";
+  return String(a ?? "");
+}
+function E(a){return esc(t(a));}
+
+const UI = {
+  ttl:[
+    "Your Visit to Bosnia and Herzegovina",
+    "زيارتك إلى البوسنة والهرسك",
+    "Ihr Besuch in Bosnien und Herzegowina"
+  ],
+  sub:["Visitor survey","استبيان للزوار","Besucherumfrage"],
+  hello:[
+    "Thank you for taking part in this research",
+    "شكرًا لمساهمتك في هذا البحث",
+    "Vielen Dank für Ihre Teilnahme an dieser Studie"
+  ],
+  intro:[
+    "We want to understand why visitors choose Bosnia and Herzegovina (B&H), when they travel, and what would encourage them to return.",
+    "نريد أن نفهم لماذا يختار الزوار البوسنة والهرسك، ومتى يسافرون، وما الذي قد يشجعهم على العودة.",
+    "Wir möchten verstehen, warum Besucher Bosnien und Herzegowina (BiH) wählen, wann sie reisen und was sie zu einem erneuten Besuch bewegen würde."
+  ],
+  pts:[
+    [
+      "Takes approximately 10–15 minutes; the duration should be checked in pretesting.",
+      "Participation is voluntary. No names or contact details are requested in the questionnaire.",
+      "Part of an MBA thesis at International Burch University, Sarajevo."
+    ],
+    [
+      "يستغرق نحو 10–15 دقيقة؛ وينبغي التحقق من المدة خلال الاختبار الأولي.",
+      "المشاركة طوعية. لا يطلب الاستبيان أسماء أو بيانات اتصال.",
+      "البحث جزء من رسالة ماجستير في إدارة الأعمال بجامعة إنترناشونال بورتش، سراييفو."
+    ],
+    [
+      "Dauer etwa 10–15 Minuten; dies sollte im Pretest überprüft werden.",
+      "Die Teilnahme ist freiwillig. Im Fragebogen werden keine Namen oder Kontaktdaten erfragt.",
+      "Teil einer MBA-Abschlussarbeit an der International Burch University, Sarajevo."
+    ]
+  ],
+  defs:[
+    "In this questionnaire, “summer season” means June–September and “off-season” means October–May. These are working definitions, not a claim that every location has the same peak season. Answer about your current visit or, if you are not currently visiting, your most recent completed visit to B&H.",
+    "في هذا الاستبيان، يُقصد بـ«موسم الصيف» الفترة من يونيو إلى سبتمبر، وبـ«خارج الموسم» الفترة من أكتوبر إلى مايو. هذه تعريفات إجرائية ولا تعني أن جميع المناطق لها موسم ذروة واحد. أجب عن زيارتك الحالية، أو عن آخر زيارة مكتملة إذا لم تكن تزور البلد حاليًا.",
+    "In diesem Fragebogen bezeichnet „Sommersaison“ Juni–September und „Nebensaison“ Oktober–Mai. Dies sind Arbeitsdefinitionen; nicht alle Orte haben dieselbe Hauptsaison. Beziehen Sie sich auf Ihren laufenden Besuch oder, falls Sie derzeit nicht vor Ort sind, auf Ihren letzten abgeschlossenen Besuch in BiH."
+  ],
+  cons:[
+    "I am at least 18 years old, have read the participant information, and voluntarily agree to participate and to the processing described in that information.",
+    "أبلغ من العمر 18 عامًا على الأقل، وقرأت معلومات المشاركة، وأوافق طوعًا على المشاركة وعلى معالجة البيانات الموضحة في تلك المعلومات.",
+    "Ich bin mindestens 18 Jahre alt, habe die Teilnahmeinformation gelesen und willige freiwillig in die Teilnahme und die dort beschriebene Verarbeitung ein."
+  ],
+  sensitiveCons:[
+    "Optional: I explicitly consent to answering and to the described processing of responses that may reveal religious beliefs or health-related information. If I leave this unchecked, the relevant questions will be skipped without affecting my participation.",
+    "اختياري: أوافق صراحةً على الإجابة وعلى المعالجة الموضحة للإجابات التي قد تكشف عن معتقدات دينية أو معلومات مرتبطة بالصحة. إذا لم أحدد هذا المربع، فستُتخطى الأسئلة المعنية دون التأثير في مشاركتي.",
+    "Freiwillig: Ich willige ausdrücklich in die Beantwortung und die beschriebene Verarbeitung von Antworten ein, die religiöse Überzeugungen oder gesundheitsbezogene Informationen erkennen lassen könnten. Ohne Auswahl werden die betreffenden Fragen übersprungen, ohne meine Teilnahme zu beeinträchtigen."
+  ],
+  sensitiveHelp:[
+    "This concerns B5, C4, D10, D11, F3 and G6. No religious affiliation or medical diagnosis is requested. You may skip individual questions even after consenting.",
+    "يشمل ذلك الأسئلة B5 وC4 وD10 وD11 وF3 وG6. لا يُطلب الانتماء الديني أو أي تشخيص طبي. يمكنك تخطي أي سؤال حتى بعد الموافقة.",
+    "Dies betrifft B5, C4, D10, D11, F3 und G6. Religionszugehörigkeit oder medizinische Diagnosen werden nicht erfragt. Auch nach Einwilligung können einzelne Fragen übersprungen werden."
+  ],
+  privacy:["Participant information and privacy","معلومات المشاركة والخصوصية","Teilnahmeinformation und Datenschutz"],
+  privacyGeneral:[
+    "Participation is voluntary. You may skip optional questions or stop before submitting without penalty. There is no payment or guaranteed personal benefit. Some questions concern personal preferences. Do not enter names, contact details, booking numbers, medical information, religious beliefs or details identifying other people in comments. Combinations of answers may still allow identification, so complete anonymity is not guaranteed.",
+    "المشاركة طوعية. يمكنك تخطي الأسئلة الاختيارية أو التوقف قبل الإرسال دون أي عقوبة. لا يوجد مقابل مالي أو منفعة شخصية مضمونة. تتعلق بعض الأسئلة بتفضيلات شخصية. لا تكتب في التعليقات أسماء أو بيانات اتصال أو أرقام حجوزات أو معلومات طبية أو معتقدات دينية أو تفاصيل تحدد هوية الآخرين. قد تسمح مجموعات الإجابات بالتعرف إلى شخص؛ لذلك لا تُضمن مجهولية الهوية الكاملة.",
+    "Die Teilnahme ist freiwillig. Sie können freiwillige Fragen überspringen oder vor dem Absenden ohne Nachteile aufhören. Es gibt keine Vergütung und keinen garantierten persönlichen Nutzen. Einige Fragen betreffen persönliche Vorlieben. Bitte keine Namen, Kontaktdaten, Buchungsnummern, medizinischen Angaben, religiösen Überzeugungen oder identifizierenden Angaben über andere Personen in Kommentare eintragen. Antwortkombinationen könnten eine Identifizierung ermöglichen; vollständige Anonymität wird daher nicht garantiert."
+  ],
+  technicalPrivacy:[
+    "Answers remain in this open page until submission. This survey does not save answers in cookies or persistent browser storage and contains no analytics. Reloading or closing the page loses unsent answers. In live mode, submission sends the answers, a random submission code, language, timing and version information to the configured Google Apps Script service. Hosting and Google services may process connection data such as IP addresses under their own arrangements; the researcher must describe these arrangements below.",
+    "تبقى الإجابات في هذه الصفحة المفتوحة حتى الإرسال. لا يحفظ الاستبيان الإجابات في ملفات الارتباط أو التخزين الدائم للمتصفح، ولا يحتوي على أدوات تحليل استخدام. تؤدي إعادة تحميل الصفحة أو إغلاقها إلى فقدان الإجابات غير المرسلة. في الوضع الفعلي، تُرسل الإجابات ورمز إرسال عشوائي واللغة ومعلومات التوقيت والإصدار إلى خدمة Google Apps Script المحددة. قد تعالج الاستضافة وخدمات Google بيانات الاتصال مثل عنوان IP وفق ترتيباتها؛ وعلى الباحث توضيح هذه الترتيبات أدناه.",
+    "Antworten verbleiben bis zum Absenden auf dieser geöffneten Seite. Der Fragebogen speichert keine Antworten in Cookies oder dauerhaftem Browserspeicher und enthält keine Analysewerkzeuge. Beim Neuladen oder Schließen gehen nicht übermittelte Antworten verloren. Im Live-Modus werden Antworten, ein zufälliger Übermittlungscode, Sprache sowie Zeit- und Versionsangaben an den konfigurierten Google-Apps-Script-Dienst gesendet. Hosting und Google-Dienste können Verbindungsdaten wie IP-Adressen nach eigenen Regelungen verarbeiten; diese sind unten zu erläutern."
+  ],
+  pending:[
+    "To be confirmed by the university before recruitment.",
+    "يجب أن تؤكد الجامعة ذلك قبل استقطاب المشاركين.",
+    "Vor der Rekrutierung durch die Hochschule zu bestätigen."
+  ],
+  start:["Start the survey","ابدأ الاستبيان","Umfrage starten"],
+  next:["Next","التالي","Weiter"],
+  back:["Back","السابق","Zurück"],
+  send:["Submit","إرسال","Absenden"],
+  finishPreview:["Finish preview","إنهاء المعاينة","Vorschau beenden"],
+  step:["Step {0} of {1}","الخطوة {0} من {1}","Schritt {0} von {1}"],
+  req:[
+    "Please answer or correct the highlighted required questions.",
+    "يرجى الإجابة عن الأسئلة المطلوبة المميزة أو تصحيحها.",
+    "Bitte beantworten oder korrigieren Sie die markierten Pflichtfragen."
+  ],
+  max:[
+    "You can choose up to 3.",
+    "يمكنك اختيار 3 كحد أقصى.",
+    "Sie können bis zu 3 auswählen."
+  ],
+  thx:["Thank you!","شكرًا لك!","Vielen Dank!"],
+  thx2:[
+    "The submission service confirmed receipt of your answers. Keep the reference code below if you wish to contact the research team. See the participant information for the applicable withdrawal procedure and limitations.",
+    "أكدت خدمة الإرسال استلام إجاباتك. احتفظ بالرمز المرجعي أدناه إذا رغبت في التواصل مع فريق البحث. راجع معلومات المشاركة للاطلاع على آلية سحب الموافقة وحدودها.",
+    "Der Übermittlungsdienst hat den Eingang Ihrer Antworten bestätigt. Bewahren Sie den Referenzcode auf, falls Sie das Forschungsteam kontaktieren möchten. Das geltende Widerrufsverfahren und seine Grenzen stehen in der Teilnahmeinformation."
+  ],
+  previewDone:[
+    "Preview completed",
+    "اكتملت المعاينة",
+    "Vorschau abgeschlossen"
+  ],
+  previewDone2:[
+    "Nothing was sent or saved to the research database. This was a questionnaire preview.",
+    "لم يُرسل أو يُحفظ أي شيء في قاعدة بيانات البحث. كانت هذه معاينة للاستبيان.",
+    "Es wurde nichts an die Forschungsdatenbank gesendet oder dort gespeichert. Dies war eine Fragebogenvorschau."
+  ],
+  no:[
+    "Thank you for your interest. This survey is for consenting adults aged 18 or over who usually live outside B&H and have visited it.",
+    "شكرًا لاهتمامك. هذا الاستبيان مخصص للبالغين الموافقين على المشاركة، بعمر 18 عامًا فأكثر، الذين يقيمون عادةً خارج البوسنة والهرسك وسبق لهم زيارتها.",
+    "Vielen Dank für Ihr Interesse. Die Umfrage richtet sich an einwilligende Erwachsene ab 18 Jahren, die gewöhnlich außerhalb von BiH leben und das Land besucht haben."
+  ],
+  err:[
+    "We could not confirm that your answers were saved. They remain in this open tab. Do not close or reload it. A retry uses the same submission code; the database must prevent duplicate records.",
+    "لم نتمكن من تأكيد حفظ إجاباتك. لا تزال موجودة في علامة التبويب المفتوحة. لا تغلقها ولا تعِد تحميلها. تستخدم المحاولة التالية رمز الإرسال نفسه؛ ويجب أن تمنع قاعدة البيانات السجلات المكررة.",
+    "Wir konnten die Speicherung nicht bestätigen. Ihre Antworten bleiben in diesem geöffneten Tab. Bitte nicht schließen oder neu laden. Ein erneuter Versuch verwendet denselben Übermittlungscode; die Datenbank muss doppelte Datensätze verhindern."
+  ],
+  sending:["Saving…","جارٍ الحفظ…","Wird gespeichert…"],
+  sel:["Select…","اختر…","Auswählen…"],
+  optional:["Optional","اختياري","Freiwillig"],
+  clear:["Clear this answer","مسح هذه الإجابة","Diese Antwort löschen"],
+  na:["Not applicable","لا ينطبق","Nicht zutreffend"],
+  dk:["Don’t know / cannot assess","لا أعرف / لا أستطيع التقييم","Weiß nicht / kann ich nicht beurteilen"],
+  pnts:["Prefer not to answer","أفضل عدم الإجابة","Möchte ich nicht beantworten"],
+  ratingHelp:[
+    "Use 1–5, choose a separate nonnumeric option, or leave the statement unanswered.",
+    "اختر درجة من 1 إلى 5، أو خيارًا منفصلًا غير رقمي، أو اترك العبارة دون إجابة.",
+    "Wählen Sie 1–5, eine gesonderte nichtnumerische Antwort oder lassen Sie die Aussage unbeantwortet."
+  ],
+  requiredHelp:[
+    "An asterisk marks information needed for consent, eligibility or visit timing. Other questions can be skipped.",
+    "تشير النجمة إلى معلومات مطلوبة للموافقة أو الأهلية أو توقيت الزيارة. يمكن تخطي الأسئلة الأخرى.",
+    "Ein Stern kennzeichnet Angaben zu Einwilligung, Teilnahmevoraussetzungen oder Reisezeitpunkt. Andere Fragen können übersprungen werden."
+  ],
+  currentHelp:[
+    "For a current visit, answer about your experience so far. For nights, give the planned total for this visit.",
+    "إذا كانت الزيارة جارية، فأجب عن تجربتك حتى الآن. ولعدد الليالي، اذكر الإجمالي المخطط لهذه الزيارة.",
+    "Bei einem laufenden Besuch beziehen Sie sich auf Ihre bisherigen Erfahrungen. Geben Sie bei den Übernachtungen die geplante Gesamtzahl an."
+  ],
+  dateError:[
+    "The arrival month/year is invalid, is in the future, or is outside the configured study period.",
+    "شهر أو سنة الوصول غير صالحين، أو يقعان في المستقبل، أو خارج فترة الدراسة المحددة.",
+    "Anreisemonat/-jahr ist ungültig, liegt in der Zukunft oder außerhalb des festgelegten Untersuchungszeitraums."
+  ],
+  nightsError:[
+    "Enter a whole number of nights from 0 to 365. For a current visit, use the planned total.",
+    "أدخل عددًا صحيحًا لليالي من 0 إلى 365. للزيارة الجارية، استخدم الإجمالي المخطط.",
+    "Bitte eine ganze Zahl von 0 bis 365 Nächten angeben. Bei einem laufenden Besuch die geplante Gesamtzahl verwenden."
+  ],
+  reviewMode:[
+    "REVIEW MODE: the original questionnaire is available for checking. No answers are transmitted. Institutional privacy details and live collection have not been confirmed.",
+    "وضع المراجعة: الاستبيان الأصلي متاح للفحص. لا تُرسل أي إجابات. لم تُؤكد بعد تفاصيل الخصوصية المؤسسية أو جاهزية جمع البيانات الفعلي.",
+    "PRÜFMODUS: Der ursprüngliche Fragebogen kann geprüft werden. Antworten werden nicht übermittelt. Institutionelle Datenschutzangaben und Live-Erhebung sind noch nicht bestätigt."
+  ],
+  blocked:[
+    "Live collection is not open: required privacy information, approvals or backend testing are incomplete. No answers will be transmitted.",
+    "جمع البيانات الفعلي غير متاح: معلومات الخصوصية أو الموافقات أو اختبار النظام غير مكتملة. لن تُرسل أي إجابات.",
+    "Die Live-Erhebung ist nicht geöffnet: Datenschutzangaben, Genehmigungen oder Backend-Test sind unvollständig. Antworten werden nicht übermittelt."
+  ],
+  liveMode:[
+    "Live survey. Please read the participant information before consenting.",
+    "استبيان فعلي. يرجى قراءة معلومات المشاركة قبل الموافقة.",
+    "Live-Umfrage. Bitte lesen Sie vor der Einwilligung die Teilnahmeinformation."
+  ],
+  period:[
+    "Eligible visit-start period",
+    "فترة بدء الزيارة المقبولة",
+    "Zulässiger Zeitraum des Besuchsbeginns"
+  ],
+  noCutoff:[
+    "No historical cutoff is currently configured; future arrival months are not accepted.",
+    "لا يوجد حد تاريخي محدد حاليًا؛ ولا تُقبل أشهر الوصول المستقبلية.",
+    "Derzeit ist keine historische Begrenzung festgelegt; zukünftige Anreisemonate werden nicht akzeptiert."
+  ],
+  exit:[
+    "Clear answers and restart",
+    "مسح الإجابات والبدء من جديد",
+    "Antworten löschen und neu beginnen"
+  ],
+  exitConfirm:[
+    "Clear answers from this page? Anything already received by the submission service is not deleted by this action.",
+    "هل تريد مسح الإجابات من هذه الصفحة؟ لا يؤدي هذا الإجراء إلى حذف أي بيانات سبق أن استلمتها خدمة الإرسال.",
+    "Antworten von dieser Seite löschen? Bereits vom Übermittlungsdienst empfangene Daten werden dadurch nicht gelöscht."
+  ],
+  footer:[
+    "No persistent answer storage. Closing or reloading this page loses unsent answers. Version: ",
+    "لا يوجد تخزين دائم للإجابات. يؤدي إغلاق الصفحة أو إعادة تحميلها إلى فقدان الإجابات غير المرسلة. الإصدار: ",
+    "Keine dauerhafte Antwortspeicherung. Schließen oder Neuladen löscht nicht übermittelte Antworten aus dieser Seite. Version: "
+  ],
+  theme:["Light / dark","فاتح / داكن","Hell / dunkel"],
+  skip:["Skip to questionnaire","الانتقال إلى الاستبيان","Zum Fragebogen"],
+  reference:["Submission reference","مرجع الإرسال","Übermittlungsreferenz"],
+  sensitiveSkipped:[
+    "Some optional questions are skipped because separate consent was not selected.",
+    "تم تخطي بعض الأسئلة الاختيارية لعدم تحديد الموافقة المنفصلة.",
+    "Einige freiwillige Fragen werden ohne gesonderte Einwilligung übersprungen."
+  ],
+  textHelp:[
+    "Optional; maximum 1,000 characters. Do not include identifying, medical or religion-related personal information.",
+    "اختياري؛ بحد أقصى 1000 حرف. لا تذكر معلومات شخصية تحدد الهوية أو معلومات طبية أو مرتبطة بالدين.",
+    "Freiwillig; höchstens 1.000 Zeichen. Bitte keine identifizierenden, medizinischen oder religionsbezogenen persönlichen Angaben."
+  ]
+};
+
+const INFO_LABELS = {
+  controller:["Data controller and address","الجهة المتحكمة في البيانات وعنوانها","Verantwortlicher und Anschrift"],
+  researcher:["Researcher","الباحث","Forschende Person"],
+  supervisor:["Supervisor","المشرف","Betreuung"],
+  contact:["Research contact","التواصل بشأن البحث","Forschungskontakt"],
+  dataProtectionContact:["Data-protection contact","التواصل بشأن حماية البيانات","Datenschutzkontakt"],
+  legalBasis:["Legal basis and sensitive-data condition","الأساس القانوني وشرط معالجة البيانات الحساسة","Rechtsgrundlage und Bedingung für sensible Daten"],
+  recipients:["Who can access the data","الجهات التي يمكنها الوصول إلى البيانات","Zugriffsberechtigte"],
+  hostingTransfers:["Hosting, processors and international transfers","الاستضافة والمعالجون والتحويلات الدولية","Hosting, Auftragsverarbeiter und internationale Übermittlungen"],
+  retention:["Retention, anonymisation and deletion","الاحتفاظ وإخفاء الهوية والحذف","Aufbewahrung, Anonymisierung und Löschung"],
+  rightsComplaints:["Rights and complaints","الحقوق والشكاوى","Rechte und Beschwerden"],
+  withdrawal:["Withdrawal and its practical limits","سحب الموافقة وحدوده العملية","Widerruf und praktische Grenzen"]
+};
+
+const SC = {
+  a:[
+    ["Strongly disagree","Strongly agree"],
+    ["لا أوافق إطلاقًا","أوافق تمامًا"],
+    ["Stimme überhaupt nicht zu","Stimme voll und ganz zu"]
+  ],
+  s:[
+    ["Very dissatisfied","Very satisfied"],
+    ["غير راضٍ إطلاقًا","راضٍ تمامًا"],
+    ["Sehr unzufrieden","Sehr zufrieden"]
+  ]
+};
+const SCALE_LABELS = {
+  a:[
+    ["Strongly disagree","Disagree","Neither agree nor disagree","Agree","Strongly agree"],
+    ["لا أوافق إطلاقًا","لا أوافق","لا أوافق ولا أعارض","أوافق","أوافق تمامًا"],
+    ["Stimme überhaupt nicht zu","Stimme eher nicht zu","Weder noch","Stimme eher zu","Stimme voll und ganz zu"]
+  ],
+  s:[
+    ["Very dissatisfied","Dissatisfied","Neither satisfied nor dissatisfied","Satisfied","Very satisfied"],
+    ["غير راضٍ إطلاقًا","غير راضٍ","لا راضٍ ولا غير راضٍ","راضٍ","راضٍ تمامًا"],
+    ["Sehr unzufrieden","Eher unzufrieden","Weder zufrieden noch unzufrieden","Eher zufrieden","Sehr zufrieden"]
+  ]
+};
+
 const YN=[["Yes","نعم","Ja"],["No","لا","Nein"]];
-const MON=[["January","يناير","Januar"],["February","فبراير","Februar"],["March","مارس","März"],["April","أبريل","April"],["May","مايو","Mai"],["June","يونيو","Juni"],["July","يوليو","Juli"],["August","أغسطس","August"],["September","سبتمبر","September"],["October","أكتوبر","Oktober"],["November","نوفمبر","November"],["December","ديسمبر","Dezember"]];
-const Y=new Date().getFullYear(),YRS=[Y,Y-1,Y-2,Y-3].map(x=>N(String(x))).concat([["Earlier","قبل ذلك","Früher"]]);
-const CTRY=[["Austria","النمسا","Österreich"],["Germany","ألمانيا","Deutschland"],["Italy","إيطاليا","Italien"],["France","فرنسا","Frankreich"],["Poland","بولندا","Polen"],["Other EU country","دولة أخرى في الاتحاد الأوروبي","Anderes EU-Land"],["Saudi Arabia","السعودية","Saudi-Arabien"],["Kuwait","الكويت","Kuwait"],["Qatar","قطر","Katar"],["United Arab Emirates","الإمارات العربية المتحدة","Vereinigte Arabische Emirate"],["Other GCC country","دولة خليجية أخرى","Anderes GCC-Land"],["Other country","دولة أخرى","Anderes Land"]];
-const OTH=["Other","أخرى","Sonstiges"],PNS=["Prefer not to say","أفضّل عدم الإجابة","Keine Angabe"];
-const Q=(id,ty,l,o,x={})=>({id,ty,l,o,...x});
-const G=(pre,start,stem,items,sc)=>({ty:'l',pre,start,stem,items,sc});
-const SCR=[Q("S2","s",["Do you live in Bosnia and Herzegovina?","هل تقيم في البوسنة والهرسك؟","Leben Sie in Bosnien und Herzegowina?"],[["Yes","نعم، أقيم فيها","Ja, ich lebe dort","Evet, orada yaşıyorum"],["No","لا، أقيم في بلد آخر","Nein, ich lebe woanders","Hayır, başka bir yerde yaşıyorum"]]),
- Q("S3","s",["Have you ever visited B&H?","هل سبق أن زرت البوسنة والهرسك؟","Haben Sie BiH schon einmal besucht?"],[["Yes","نعم","Ja"],["No","لا","Nein"]])];
+const MON=[
+  ["January","يناير","Januar"],["February","فبراير","Februar"],
+  ["March","مارس","März"],["April","أبريل","April"],
+  ["May","مايو","Mai"],["June","يونيو","Juni"],
+  ["July","يوليو","Juli"],["August","أغسطس","August"],
+  ["September","سبتمبر","September"],["October","أكتوبر","Oktober"],
+  ["November","نوفمبر","November"],["December","ديسمبر","Dezember"]
+];
+const OTH=["Other","أخرى","Sonstiges"];
+const PNS=["Prefer not to say","أفضل عدم الإجابة","Keine Angabe"];
+const CTRY=[
+  ["Austria","النمسا","Österreich"],
+  ["Germany","ألمانيا","Deutschland"],
+  ["Italy","إيطاليا","Italien"],
+  ["France","فرنسا","Frankreich"],
+  ["Poland","بولندا","Polen"],
+  ["Other EU country","دولة أخرى في الاتحاد الأوروبي","Anderes EU-Land"],
+  ["Saudi Arabia","السعودية","Saudi-Arabien"],
+  ["Kuwait","الكويت","Kuwait"],
+  ["Qatar","قطر","Katar"],
+  ["United Arab Emirates","الإمارات العربية المتحدة","Vereinigte Arabische Emirate"],
+  ["Other GCC country","دولة أخرى في مجلس التعاون الخليجي","Anderes GCC-Land"],
+  ["Other country","دولة أخرى","Anderes Land"]
+];
+
+function dateIndex(value){
+  if(value===null) return null;
+  if(typeof value!=="string" || !/^\d{4}-(0[1-9]|1[0-2])$/.test(value)) return NaN;
+  const [y,m]=value.split("-").map(Number);
+  return y*12+m-1;
+}
+function validPeriodConfig(){
+  const a=dateIndex(CONFIG.VISIT_START),b=dateIndex(CONFIG.VISIT_END);
+  return (a===null||Number.isFinite(a)) &&
+         (b===null||Number.isFinite(b)) &&
+         (a===null||b===null||a<=b);
+}
+function yearOptions(){
+  const now=new Date(),Y=now.getFullYear();
+  const a=dateIndex(CONFIG.VISIT_START),b=dateIndex(CONFIG.VISIT_END);
+  if(!validPeriodConfig()) return [N(String(Y))];
+  const high=Math.min(Y,b===null?Y:Math.floor(b/12));
+  const low=a===null?Math.min(high,Y-3):Math.floor(a/12);
+  const rows=[];
+  for(let y=high;y>=low;y--) rows.push(N(String(y)));
+  if(a===null) rows.push(["Earlier","قبل ذلك","Früher"]);
+  return rows;
+}
+
+const Q=(id,ty,l,o,x={})=>({id,ty,l,o,opt:1,...x});
+const G=(pre,start,stem,items,sc)=>({ty:"l",pre,start,stem,items,sc});
+
+const SCR=[
+  Q("S2","s",[
+    "Do you usually live in Bosnia and Herzegovina?",
+    "هل تقيم عادةً في البوسنة والهرسك؟",
+    "Leben Sie gewöhnlich in Bosnien und Herzegowina?"
+  ],[
+    ["Yes","نعم، أقيم فيها","Ja, ich lebe dort"],
+    ["No","لا، أقيم في بلد آخر","Nein, ich lebe woanders"]
+  ],{opt:0}),
+  Q("S3","s",[
+    "Have you ever visited B&H, including a visit currently in progress?",
+    "هل سبق أن زرت البوسنة والهرسك، بما في ذلك زيارة جارية حاليًا؟",
+    "Haben Sie BiH schon einmal besucht, einschließlich eines derzeit laufenden Besuchs?"
+  ],YN,{opt:0}),
+  Q("S4","s",[
+    "Is the visit you will describe completed or still in progress?",
+    "هل الزيارة التي ستصفها مكتملة أم لا تزال جارية؟",
+    "Ist der Besuch, auf den Sie sich beziehen, abgeschlossen oder noch im Gange?"
+  ],[
+    ["Completed visit","زيارة مكتملة","Abgeschlossener Besuch"],
+    ["Current visit","زيارة جارية","Laufender Besuch"]
+  ],{opt:0,dep:["S3","Yes"]})
+];
+
 const PAGES=[
 {t:["About you","نبذة عنك","Zu Ihrer Person"],q:[
-Q("A1","sel",["Which country do you live in?","في أي بلد تقيم؟","In welchem Land leben Sie?"],CTRY),
-Q("A2","s",["Gender","الجنس","Geschlecht"],[["Female","أنثى","Weiblich"],["Male","ذكر","Männlich"],PNS]),
-Q("A3","s",["How old are you?","كم عمرك؟","Wie alt sind Sie?"],["18–24","25–34","35–44","45–54","55–64","65+"].map(N)),
-Q("A4","s",["What is your highest level of education?","ما أعلى مستوى تعليمي حصلت عليه؟","Höchster Bildungsabschluss"],[["Secondary school or below","ثانوية أو أقل","Sekundarschule oder niedriger"],["Bachelor’s degree","بكالوريوس","Bachelor"],["Master’s degree","ماجستير","Master"],["Doctorate","دكتوراه","Promotion"],OTH]),
-Q("A5","s",["Monthly household income in EUR (optional)","الدخل الشهري للأسرة باليورو (اختياري)","Monatliches Haushaltseinkommen in EUR (optional)"],["< 1,500","1,500–2,999","3,000–4,999","5,000–7,999","8,000+"].map(N).concat([PNS]))]},
+  Q("A1","sel",[
+    "Which country do you usually live in?",
+    "في أي بلد تقيم عادةً؟",
+    "In welchem Land leben Sie gewöhnlich?"
+  ],CTRY,{opt:0}),
+  Q("A2","s",["Gender","الجنس","Geschlecht"],[
+    ["Female","أنثى","Weiblich"],["Male","ذكر","Männlich"],PNS
+  ]),
+  Q("A3","s",["How old are you?","كم عمرك؟","Wie alt sind Sie?"],
+    ["18–24","25–34","35–44","45–54","55–64","65+"].map(N).concat([PNS])),
+  Q("A4","s",[
+    "What is your highest level of education?",
+    "ما أعلى مستوى تعليمي حصلت عليه؟",
+    "Was ist Ihr höchster Bildungsabschluss?"
+  ],[
+    ["Secondary school or below","ثانوية أو أقل","Sekundarschulabschluss oder niedriger"],
+    ["Bachelor’s degree","بكالوريوس","Bachelorabschluss"],
+    ["Master’s degree","ماجستير","Masterabschluss"],
+    ["Doctorate","دكتوراه","Promotion"],OTH,PNS
+  ]),
+  Q("A5","s",[
+    "Monthly household income in EUR (optional)",
+    "الدخل الشهري للأسرة باليورو (اختياري)",
+    "Monatliches Haushaltseinkommen in EUR (freiwillig)"
+  ],["< 1,500","1,500–2,999","3,000–4,999","5,000–7,999","8,000+"].map(N).concat([PNS]))
+]},
 {t:["Your trip","رحلتك","Ihre Reise"],q:[
-Q("B1","s",["Was your latest trip to B&H your first visit?","هل كانت آخر رحلة لك إلى البوسنة والهرسك هي زيارتك الأولى؟","War Ihre letzte Reise nach BiH Ihr erster Besuch?"],YN),
-Q("B2","s",["How many times had you visited B&H before?","كم مرة زرتها قبل ذلك؟","Wie oft waren Sie zuvor schon dort?"],["1","2–3","4–5","6+"].map(N),{dep:["B1","No"]}),
-Q("B3","sel",["In which month did that trip start?","في أي شهر بدأت تلك الرحلة؟","In welchem Monat hat diese Reise begonnen?"],MON),
-Q("B3Y","s",["In which year did that trip take place?","وفي أي عام؟","In welchem Jahr?"],YRS),
-Q("B4","n",["How many nights did you stay in B&H?","كم ليلة قضيت في البوسنة والهرسك؟","Wie viele Nächte haben Sie in BiH verbracht?"]),
-Q("B5","s",["What was the main reason for your trip?","ما السبب الرئيسي لرحلتك؟","Was war der Hauptgrund Ihrer Reise?"],[["Holiday and relaxation","عطلة واسترخاء","Urlaub und Erholung"],["Culture, history or religious sites","الثقافة والتاريخ والمواقع الدينية","Kultur, Geschichte oder religiöse Stätten"],["Nature and outdoor activities","الطبيعة والأنشطة الخارجية","Natur und Aktivitäten im Freien"],["Spa, health or wellness","السبا والعلاج والاستجمام","Spa, Gesundheit oder Wellness"],["Visiting friends or relatives","زيارة الأصدقاء أو الأقارب","Besuch von Freunden oder Verwandten"],["Business or work","عمل أو أعمال","Geschäftliche oder berufliche Gründe"],["Property I own or may buy","عقار أملكه أو أفكر في شرائه","Eigene oder geplante Immobilie"],OTH]),
-Q("B6","s",["Who did you travel with?","مع من سافرت؟","Mit wem sind Sie gereist?"],[["Alone","بمفردي","Allein"],["Partner only","مع الزوج أو الزوجة أو الشريك","Nur mit Partner/in"],["Family with children","مع العائلة والأطفال","Mit Familie und Kindern"],["Friends","مع الأصدقاء","Mit Freunden"],["Organised group","ضمن مجموعة منظمة","In einer organisierten Gruppe"]]),
-Q("B7","m",["Which parts of B&H did you visit? (select all that apply)","ما المناطق التي زرتها؟ (يمكن اختيار أكثر من إجابة)","Welche Regionen haben Sie besucht? (Mehrfachauswahl möglich)"],[["Sarajevo and surroundings","سراييفو وضواحيها","Sarajevo und Umgebung"],["Mostar and Herzegovina","موستار والهرسك","Mostar und Herzegowina"],["Central Bosnia (Travnik, Jajce)","وسط البوسنة (ترافنيك، يايتسه)","Zentralbosnien (Travnik, Jajce)"],["Una-Sana (Bihać)","منطقة أونا-سانا (بيهاتش)","Una-Sana (Bihać)"],["Banja Luka and the north","بانيالوكا والشمال","Banja Luka und der Norden"],["East / north-east (Višegrad, Tuzla)","الشرق والشمال الشرقي (فيشيغراد، توزلا)","Osten / Nordosten (Višegrad, Tuzla)"],OTH]),
-Q("B8","s",["Where did you mainly stay?","أين أقمت في الغالب؟","Wo haben Sie hauptsächlich übernachtet?"],[["Hotel","فندق","Hotel"],["Apartment or holiday rental","شقة أو إيجار سياحي","Ferienwohnung oder Apartment"],["Hostel or guesthouse","نُزل أو بيت ضيافة","Hostel oder Pension"],["Property I own","عقار أملكه","Eigene Immobilie"],["With friends or relatives","عند أصدقاء أو أقارب","Bei Freunden oder Verwandten"],OTH]),
-Q("B9","s",["How did you organise the trip?","كيف رتّبت رحلتك؟","Wie haben Sie die Reise organisiert?"],[["On my own","بنفسي","In Eigenregie"],["Package tour","رحلة سياحية شاملة","Pauschalreise"],["Tailor-made through a travel agency","عبر وكالة سفر بترتيب خاص","Individuell über ein Reisebüro"]]),
-Q("B10","m",["Where did you get information when planning your trip? (up to 3, optional)","من أين حصلت على المعلومات عند التخطيط؟ (حتى 3، اختياري)","Wo haben Sie sich bei der Planung Ihrer Reise informiert? (bis zu 3, freiwillig)"],[["Friends and relatives","الأصدقاء والأقارب","Freunde und Verwandte"],["Social media and influencers","وسائل التواصل والمؤثرون","Soziale Medien und Influencer"],["Search engines and websites","محركات البحث والمواقع","Suchmaschinen und Websites"],["Booking and review platforms","منصات الحجز والتقييم","Buchungs- und Bewertungsplattformen"],["Travel agency or tour operator","وكالة أو منظم رحلات","Reisebüro oder Veranstalter"],["My earlier visits","زياراتي السابقة","Frühere Besuche"],OTH],{max:3,opt:1})]},
-{t:["Why did you travel at that time?","لماذا سافرت في ذلك الوقت؟","Warum sind Sie zu dieser Zeit gereist?"],q:[G("C",1,["I travelled in that month because…","سافرت في ذلك الشهر لأن…","Ich bin in diesem Monat gereist, weil…"],[
-["the timing suited my school holidays or annual leave","كان الوقت مناسبًا لإجازتي الدراسية أو إجازة عملي","der Zeitraum zu meinen Ferien oder meinem Urlaub passte"],
-["the weather was pleasant","كان الطقس لطيفًا","das Wetter angenehm war"],
-["I wanted to escape the heat at home","أردت الابتعاد عن حرارة الطقس في بلدي","ich der Hitze zu Hause entfliehen wollte"],
-["it coincided with a religious or public holiday (such as Eid)","صادف عطلة دينية أو رسمية (مثل العيد)","er mit einem religiösen oder gesetzlichen Feiertag (z. B. Eid) zusammenfiel"],
-["there was an event, festival or activity season I wanted to enjoy (e.g., skiing)","كانت هناك فعالية أو مهرجان أو موسم نشاط أردت الاستمتاع به (مثل التزلج)","es ein Event, Festival oder eine Aktivitätssaison gab, die ich nutzen wollte (z. B. Skifahren)"],
-["flights and accommodation were cheaper","كانت أسعار الرحلات والإقامة أقل","Flüge und Unterkünfte günstiger waren"],
-["there were convenient flights or transport connections","توفرت رحلات أو وسائل مواصلات مناسبة","es passende Flug- oder Verkehrsverbindungen gab"],
-["friends or relatives could join me or host me","كان أصدقائي أو أقاربي متاحين للانضمام إليّ أو لاستضافتي","Freunde oder Verwandte mitkommen oder mich empfangen konnten"]],'a')]},
-{t:["What attracted you to B&H?","ما الذي جذبك إلى البوسنة والهرسك؟","Was hat Sie an BiH besonders angesprochen?"],q:[G("D",1,["I chose B&H because…","اخترت البوسنة والهرسك لأن…","Ich habe mich für BiH entschieden, weil…"],[
-["of its natural scenery","مناظرها الطبيعية جذبتني","mich die Landschaft und Natur angezogen haben"],
-["I wanted to experience local culture and traditions","أردت التعرف على الثقافة والتقاليد المحلية","ich die lokale Kultur und Traditionen kennenlernen wollte"],
-["historical sites and monuments interest me","تهمني المواقع والمعالم التاريخية","mich historische Stätten und Denkmäler interessieren"],
-["I wanted to relax and get away from everyday routine","أردت الاسترخاء والابتعاد عن روتين الحياة اليومية","ich entspannen und dem Alltag entfliehen wollte"],
-["the climate suits me","المناخ يناسبني","mir das Klima zusagt"],
-["I enjoy outdoor activities such as hiking, rafting or skiing","أستمتع بالأنشطة الخارجية مثل التنزه الجبلي والتجديف والتزلج","ich Aktivitäten im Freien wie Wandern, Rafting oder Skifahren mag"],
-["it is an affordable destination","هي وجهة بأسعار معقولة","es ein erschwingliches Reiseziel ist"],
-["family or friends recommended it","أوصى بها أفراد من عائلتي أو أصدقائي","Familie oder Freunde es empfohlen haben"],
-["social media or online content inspired me","ألهمتني وسائل التواصل الاجتماعي أو المحتوى على الإنترنت","soziale Medien oder Online-Inhalte mich inspiriert haben"],
-["I wanted to visit religious or spiritual places","أردت زيارة أماكن دينية أو روحانية","ich religiöse oder spirituelle Orte besuchen wollte"],
-["halal food and prayer facilities are available","يتوفر الطعام الحلال وأماكن الصلاة","es Halal-Essen und Gebetsmöglichkeiten gibt"],
-["I wanted to use spa and wellness facilities","أردت الاستفادة من خدمات السبا والعافية","ich Spa- und Wellnessangebote nutzen wollte"],
-["I wanted to see friends or relatives who live there","أردت زيارة أصدقاء أو أقارب يقيمون هناك","ich dort lebende Freunde oder Verwandte besuchen wollte"]],'a')]},
-{t:["Your impression of B&H","انطباعك عن البوسنة والهرسك","Ihr Eindruck von BiH"],q:[G("E",1,["In my view, B&H…","في رأيي، البوسنة والهرسك…","Meiner Meinung nach…"],[
-["is a safe place to visit","وجهة آمنة للزيارة","ist BiH ein sicheres Reiseziel"],
-["has beautiful landscapes and nature","تتمتع بطبيعة ومناظر جميلة","bietet BiH wunderschöne Landschaften und Natur"],
-["has a rich culture and history to explore","تزخر بثقافة وتاريخ غنيين يستحقان الاكتشاف","hat BiH eine reiche Kultur und Geschichte zu entdecken"],
-["offers good value for money","تقدم قيمة جيدة مقابل المال","bietet BiH ein gutes Preis-Leistungs-Verhältnis"],
-["has good enough tourism infrastructure (roads, signs, accommodation)","لديها بنية تحتية سياحية جيدة (طرق ولافتات وأماكن إقامة)","hat BiH eine ausreichende touristische Infrastruktur (Straßen, Beschilderung, Unterkünfte)"],
-["is welcoming to visitors like me","ترحّب بزوار مثلي","ist BiH für Gäste wie mich einladend"],
-["has a good reputation in my home country","تتمتع بسمعة جيدة في بلدي","hat BiH in meinem Heimatland einen guten Ruf"],
-["is a good place to visit outside the summer months (October–May)","مكان مناسب للزيارة خارج أشهر الصيف (من أكتوبر إلى مايو)","lohnt sich BiH auch außerhalb der Sommermonate (Oktober–Mai)"],
-["has plenty to do throughout the year","فيها الكثير مما يمكن فعله على مدار العام","gibt es in BiH das ganze Jahr über viel zu tun"]],'a')]},
-{t:["How was your visit?","كيف كانت زيارتك؟","Wie war Ihr Besuch?"],q:[G("F",1,["How satisfied were you with…","ما مدى رضاك عن…","Wie zufrieden waren Sie mit…"],[
-["the quality of your accommodation","جودة مكان إقامتك","der Qualität Ihrer Unterkunft"],
-["restaurants and food","المطاعم والطعام","den Restaurants und dem Essen"],
-["food options that suit your dietary or religious needs (e.g., halal)","خيارات الطعام المناسبة لاحتياجاتك الغذائية أو الدينية (مثل الحلال)","Speisen, die zu Ihren Ernährungs- oder religiösen Bedürfnissen passen (z. B. halal)"],
-["getting around (transport and access)","التنقل (المواصلات وسهولة الوصول)","der Fortbewegung (Verkehr und Erreichbarkeit)"],
-["tourist information and signs","المعلومات السياحية واللافتات الإرشادية","Touristeninformation und Beschilderung"],
-["cleanliness of tourist places","نظافة الأماكن السياحية","der Sauberkeit der touristischen Orte"],
-["hospitality of local people","حسن ضيافة السكان المحليين","der Gastfreundschaft der Einheimischen"],
-["safety and security","الأمن والسلامة","der Sicherheit"],
-["the value you got for the money you spent","القيمة التي حصلت عليها مقابل ما أنفقته","dem Preis-Leistungs-Verhältnis"],
-["your visit overall","زيارتك بشكل عام","Ihrem Besuch insgesamt"]],'s'),
-G("F",11,["","",""],[["My visit met my expectations","لبّت زيارتي توقعاتي","Mein Besuch hat meine Erwartungen erfüllt"]],'a')]},
-{t:["Travelling outside the summer season","السفر خارج موسم الصيف","Reisen außerhalb der Sommersaison"],q:[
-G("G",1,["I would be less likely to visit between October and May because…","سأكون أقل رغبة في الزيارة بين أكتوبر ومايو لأن…","Ich würde zwischen Oktober und Mai seltener nach BiH reisen, weil…"],[
-["the weather is less pleasant","الطقس أقل ملاءمة","das Wetter weniger angenehm ist"],
-["fewer attractions and facilities are open","عدد المعالم والمرافق المفتوحة أقل","weniger Attraktionen und Einrichtungen geöffnet sind"],
-["there are fewer flights and connections","الرحلات الجوية وخطوط المواصلات أقل","es weniger Flug- und Verkehrsverbindungen gibt"],
-["my work, school or family schedule doesn’t allow it","جدول عملي أو دراستي أو التزاماتي العائلية لا يسمح بذلك","mein Arbeits-, Schul- oder Familienkalender das nicht zulässt"],
-["there is too little information about what B&H offers outside summer","المعلومات عمّا تقدمه البوسنة والهرسك خارج الصيف قليلة","es zu wenige Informationen über das Angebot außerhalb des Sommers gibt"],
-["there are fewer services that meet my needs (e.g., halal options, services in my language)","الخدمات التي تناسبني (مثل الخيارات الحلال أو لغتي) أقل","es weniger passende Angebote gibt (z. B. Halal-Optionen, meine Sprache)"]],'a'),
-G("G",7,["I would be more likely to visit between October and May if…","سأكون أكثر رغبة في الزيارة بين أكتوبر ومايو إذا…","Ich würde zwischen Oktober und Mai eher nach BiH reisen, wenn…"],[
-["flights and accommodation were cheaper","كانت الرحلات والإقامة أرخص","Flüge und Unterkünfte günstiger wären","uçuşlar ve konaklama daha ucuz olsaydı"],
-["there were more city and cultural events","أُقيم المزيد من الفعاليات الحضرية والثقافية","es mehr Stadt- und Kulturveranstaltungen gäbe"],
-["winter sports and snow activities were available","توفرت رياضات الشتاء وأنشطة الثلوج","Wintersport und Schneeaktivitäten angeboten würden"],
-["there were spa and wellness packages","وُجدت باقات سبا واستجمام","es Spa- und Wellnesspakete gäbe"],
-["there were nature and countryside packages for spring or autumn","وُجدت باقات للطبيعة والسياحة الريفية في الربيع أو الخريف","es Natur- und Landtourismus-Angebote für Frühling oder Herbst gäbe"],
-["there were direct flights and better transport","وُجدت رحلات مباشرة ومواصلات أفضل","es Direktflüge und besseren Verkehr gäbe"]],'a')]},
-{t:["Returning to B&H","زيارة البوسنة والهرسك مرة أخرى","Erneuter Besuch"],q:[
-G("H",1,["","",""],[
-["I plan to visit B&H again","أخطط لزيارة البوسنة والهرسك مرة أخرى","Ich plane, BiH wieder zu besuchen"],
-["I would recommend B&H to friends and family","سأنصح أصدقائي وعائلتي بزيارتها","Ich würde BiH Freunden und Familie weiterempfehlen"],
-["I would choose B&H again over similar destinations","سأختار البوسنة والهرسك مجددًا بدل وجهات مشابهة","Ich würde mich wieder für BiH statt für ähnliche Reiseziele entscheiden"]],'a'),
-G("H",4,["I would consider visiting B&H…","سأفكر في زيارة البوسنة والهرسك…","Ich würde einen Besuch in BiH in Betracht ziehen…"],[
-["in spring (March–May)","في الربيع (مارس–مايو)","im Frühling (März–Mai)"],
-["in autumn (October–November)","في الخريف (أكتوبر–نوفمبر)","im Herbst (Oktober–November)"],
-["in winter (December–February)","في الشتاء (ديسمبر–فبراير)","im Winter (Dezember–Februar)"]],'a'),
-Q("I1","x",["What should B&H improve most? (optional)","ما أكثر شيء ينبغي أن تحسّنه البوسنة والهرسك؟ (اختياري)","Was sollte BiH am meisten verbessern? (freiwillig)"],null,{opt:1}),
-Q("I2","x",["What would most encourage you to visit outside summer? (optional)","ما الذي سيشجعك أكثر على الزيارة خارج الصيف؟ (اختياري)","Was würde Sie am meisten dazu bewegen, außerhalb des Sommers zu reisen? (freiwillig)"],null,{opt:1})]}];
+  Q("B1","s",[
+    "Was this your first visit to B&H?",
+    "هل كانت هذه زيارتك الأولى إلى البوسنة والهرسك؟",
+    "War dies Ihr erster Besuch in BiH?"
+  ],YN),
+  Q("B2","s",[
+    "How many times had you visited B&H before this visit?",
+    "كم مرة زرت البوسنة والهرسك قبل هذه الزيارة؟",
+    "Wie oft hatten Sie BiH vor diesem Besuch bereits besucht?"
+  ],["1","2–3","4–5","6+"].map(N),{dep:["B1","No"]}),
+  Q("B3","sel",[
+    "In which month did this visit start?",
+    "في أي شهر بدأت هذه الزيارة؟",
+    "In welchem Monat begann dieser Besuch?"
+  ],MON,{opt:0}),
+  Q("B3Y","s",[
+    "In which year did this visit start?",
+    "في أي سنة بدأت هذه الزيارة؟",
+    "In welchem Jahr begann dieser Besuch?"
+  ],yearOptions(),{opt:0}),
+  Q("B4","n",[
+    "How many nights did you stay in B&H?",
+    "كم ليلة قضيت في البوسنة والهرسك؟",
+    "Wie viele Nächte haben Sie in BiH verbracht?"
+  ],null,{opt:0}),
+  Q("B5","s",[
+    "What was the main reason for your trip?",
+    "ما السبب الرئيسي لرحلتك؟",
+    "Was war der Hauptgrund Ihrer Reise?"
+  ],[
+    ["Holiday and relaxation","عطلة واسترخاء","Urlaub und Erholung"],
+    ["Culture, history or religious sites","الثقافة والتاريخ أو المواقع الدينية","Kultur, Geschichte oder religiöse Stätten"],
+    ["Nature and outdoor activities","الطبيعة والأنشطة الخارجية","Natur und Aktivitäten im Freien"],
+    ["Spa, health or wellness","السبا أو الصحة أو الاستجمام","Spa, Gesundheit oder Wellness"],
+    ["Visiting friends or relatives","زيارة الأصدقاء أو الأقارب","Besuch von Freunden oder Verwandten"],
+    ["Business or work","العمل أو الأعمال","Geschäftliche oder berufliche Gründe"],
+    ["Property I own or may buy","عقار أملكه أو أفكر في شرائه","Eigene oder zum Kauf erwogene Immobilie"],
+    OTH,PNS
+  ]),
+  Q("B6","s",["Who did you travel with?","مع من سافرت؟","Mit wem sind Sie gereist?"],[
+    ["Alone","بمفردي","Allein"],
+    ["Partner only","مع الزوج أو الزوجة أو الشريك فقط","Nur mit Partner/in"],
+    ["Family with children","مع العائلة والأطفال","Mit Familie und Kindern"],
+    ["Friends","مع الأصدقاء","Mit Freunden"],
+    ["Organised group","ضمن مجموعة منظمة","In einer organisierten Gruppe"]
+  ]),
+  Q("B7","m",[
+    "Which parts of B&H did you visit? (select all that apply)",
+    "ما المناطق التي زرتها في البوسنة والهرسك؟ (يمكن اختيار أكثر من إجابة)",
+    "Welche Regionen von BiH haben Sie besucht? (Mehrfachauswahl möglich)"
+  ],[
+    ["Sarajevo and surroundings","سراييفو وضواحيها","Sarajevo und Umgebung"],
+    ["Mostar and Herzegovina","موستار والهرسك","Mostar und Herzegowina"],
+    ["Central Bosnia (Travnik, Jajce)","وسط البوسنة (ترافنيك، يايتسه)","Zentralbosnien (Travnik, Jajce)"],
+    ["Una-Sana (Bihać)","منطقة أونا-سانا (بيهاتش)","Una-Sana (Bihać)"],
+    ["Banja Luka and the north","بانيالوكا والشمال","Banja Luka und der Norden"],
+    ["East / north-east (Višegrad, Tuzla)","الشرق والشمال الشرقي (فيشيغراد، توزلا)","Osten / Nordosten (Višegrad, Tuzla)"],
+    OTH
+  ]),
+  Q("B8","s",[
+    "Where did you mainly stay?",
+    "أين أقمت في الغالب؟",
+    "Wo haben Sie hauptsächlich übernachtet?"
+  ],[
+    ["Hotel","فندق","Hotel"],
+    ["Apartment or holiday rental","شقة أو إيجار سياحي","Ferienwohnung oder Apartment"],
+    ["Hostel or guesthouse","نُزل أو بيت ضيافة","Hostel oder Pension"],
+    ["Property I own","عقار أملكه","Eigene Immobilie"],
+    ["With friends or relatives","عند أصدقاء أو أقارب","Bei Freunden oder Verwandten"],
+    OTH
+  ]),
+  Q("B9","s",[
+    "How did you organise the trip?",
+    "كيف رتبت رحلتك؟",
+    "Wie haben Sie die Reise organisiert?"
+  ],[
+    ["On my own","بنفسي","In Eigenregie"],
+    ["Package tour","رحلة سياحية شاملة","Pauschalreise"],
+    ["Tailor-made through a travel agency","عبر وكالة سفر بترتيب خاص","Individuell über ein Reisebüro"]
+  ]),
+  Q("B10","m",[
+    "Where did you get information when planning your trip? (up to 3, optional)",
+    "من أين حصلت على المعلومات عند التخطيط لرحلتك؟ (حتى 3، اختياري)",
+    "Wo haben Sie sich bei der Reiseplanung informiert? (bis zu 3, freiwillig)"
+  ],[
+    ["Friends and relatives","الأصدقاء والأقارب","Freunde und Verwandte"],
+    ["Social media and influencers","وسائل التواصل الاجتماعي والمؤثرون","Soziale Medien und Influencer"],
+    ["Search engines and websites","محركات البحث والمواقع","Suchmaschinen und Websites"],
+    ["Booking and review platforms","منصات الحجز والتقييم","Buchungs- und Bewertungsplattformen"],
+    ["Travel agency or tour operator","وكالة سفر أو منظم رحلات","Reisebüro oder Reiseveranstalter"],
+    ["My earlier visits","زياراتي السابقة","Frühere Besuche"],OTH
+  ],{max:3})
+]},
+{t:[
+  "Why did you travel at that time?",
+  "لماذا سافرت في ذلك الوقت؟",
+  "Warum sind Sie zu dieser Zeit gereist?"
+],q:[
+  G("C",1,[
+    "I travelled in that month because…",
+    "سافرت في ذلك الشهر لأن…",
+    "Ich bin in diesem Monat gereist, weil…"
+  ],[
+    ["the timing suited my school holidays or annual leave","كان الوقت مناسبًا لإجازتي الدراسية أو إجازة عملي","der Zeitraum zu meinen Schulferien oder meinem Jahresurlaub passte"],
+    ["the weather was pleasant","كان الطقس لطيفًا","das Wetter angenehm war"],
+    ["I wanted to escape the heat at home","أردت الابتعاد عن حرارة الطقس في مكان إقامتي","ich der Hitze an meinem Wohnort entfliehen wollte"],
+    ["it coincided with a religious or public holiday (such as Eid)","صادف عطلة دينية أو رسمية (مثل العيد)","er mit einem religiösen oder gesetzlichen Feiertag (z. B. Eid) zusammenfiel"],
+    ["there was an event, festival or activity season I wanted to enjoy (e.g., skiing)","كانت هناك فعالية أو مهرجان أو موسم نشاط أردت الاستمتاع به (مثل التزلج)","es eine Veranstaltung, ein Festival oder eine Aktivitätssaison gab, die ich nutzen wollte (z. B. Skifahren)"],
+    ["flights and accommodation were cheaper","كانت أسعار الرحلات الجوية والإقامة أقل","Flüge und Unterkünfte günstiger waren"],
+    ["there were convenient flights or transport connections","توفرت رحلات جوية أو وسائل نقل مناسبة","es passende Flug- oder Verkehrsverbindungen gab"],
+    ["friends or relatives could join me or host me","كان أصدقائي أو أقاربي متاحين للانضمام إلي أو لاستضافتي","Freunde oder Verwandte mitkommen oder mich aufnehmen konnten"]
+  ],"a")
+]},
+{t:[
+  "What attracted you to B&H?",
+  "ما الذي جذبك إلى البوسنة والهرسك؟",
+  "Was hat Sie an BiH besonders angesprochen?"
+],q:[
+  G("D",1,[
+    "I chose B&H because…",
+    "اخترت البوسنة والهرسك لأن…",
+    "Ich habe mich für BiH entschieden, weil…"
+  ],[
+    ["of its natural scenery","مناظرها الطبيعية جذبتني","mich die Landschaft und Natur angezogen haben"],
+    ["I wanted to experience local culture and traditions","أردت التعرف على الثقافة والتقاليد المحلية","ich die lokale Kultur und Traditionen kennenlernen wollte"],
+    ["historical sites and monuments interest me","تهمني المواقع والمعالم التاريخية","mich historische Stätten und Denkmäler interessieren"],
+    ["I wanted to relax and get away from everyday routine","أردت الاسترخاء والابتعاد عن روتين الحياة اليومية","ich entspannen und dem Alltag entfliehen wollte"],
+    ["the climate suits me","المناخ يناسبني","mir das Klima zusagt"],
+    ["I enjoy outdoor activities such as hiking, rafting or skiing","أستمتع بالأنشطة الخارجية مثل التنزه الجبلي والتجديف والتزلج","ich Aktivitäten im Freien wie Wandern, Rafting oder Skifahren mag"],
+    ["it is an affordable destination","هي وجهة بأسعار معقولة","es ein erschwingliches Reiseziel ist"],
+    ["family or friends recommended it","أوصى بها أفراد من عائلتي أو أصدقائي","Familie oder Freunde es empfohlen haben"],
+    ["social media or online content inspired me","ألهمتني وسائل التواصل الاجتماعي أو المحتوى على الإنترنت","soziale Medien oder Online-Inhalte mich inspiriert haben"],
+    ["I wanted to visit religious or spiritual places","أردت زيارة أماكن دينية أو روحانية","ich religiöse oder spirituelle Orte besuchen wollte"],
+    ["halal food and prayer facilities are available","يتوفر الطعام الحلال وأماكن الصلاة","es Halal-Speisen und Gebetsmöglichkeiten gibt"],
+    ["I wanted to use spa and wellness facilities","أردت الاستفادة من مرافق السبا والاستجمام","ich Spa- und Wellnessangebote nutzen wollte"],
+    ["I wanted to see friends or relatives who live there","أردت زيارة أصدقاء أو أقارب يقيمون هناك","ich dort lebende Freunde oder Verwandte besuchen wollte"]
+  ],"a")
+]},
+{t:[
+  "Your impression of B&H",
+  "انطباعك عن البوسنة والهرسك",
+  "Ihr Eindruck von BiH"
+],q:[
+  G("E",1,[
+    "In my view, B&H…",
+    "في رأيي، البوسنة والهرسك…",
+    "Meiner Meinung nach…"
+  ],[
+    ["is a safe place to visit","وجهة آمنة للزيارة","ist BiH ein sicheres Reiseziel"],
+    ["has beautiful landscapes and nature","تتمتع بطبيعة ومناظر جميلة","bietet BiH wunderschöne Landschaften und Natur"],
+    ["has a rich culture and history to explore","تزخر بثقافة وتاريخ غنيين يستحقان الاكتشاف","hat BiH eine reiche Kultur und Geschichte zu entdecken"],
+    ["offers good value for money","تقدم قيمة جيدة مقابل المال","bietet BiH ein gutes Preis-Leistungs-Verhältnis"],
+    ["has good enough tourism infrastructure (roads, signs, accommodation)","لديها بنية تحتية سياحية مناسبة (طرق ولافتات وأماكن إقامة)","hat BiH eine ausreichende touristische Infrastruktur (Straßen, Beschilderung, Unterkünfte)"],
+    ["is welcoming to visitors like me","ترحب بزوار مثلي","ist BiH Gästen wie mir gegenüber aufgeschlossen"],
+    ["has a good reputation in my home country","تتمتع بسمعة جيدة في بلد إقامتي","hat BiH in meinem Wohnsitzland einen guten Ruf"],
+    ["is a good place to visit outside the summer months (October–May)","مكان مناسب للزيارة خارج موسم الصيف المحدد هنا (أكتوبر–مايو)","lohnt sich BiH auch außerhalb der hier definierten Sommersaison (Oktober–Mai)"],
+    ["has plenty to do throughout the year","فيها الكثير مما يمكن فعله على مدار العام","gibt es in BiH das ganze Jahr über viel zu tun"]
+  ],"a")
+]},
+{t:[
+  "How was your visit?",
+  "كيف كانت زيارتك؟",
+  "Wie war Ihr Besuch?"
+],q:[
+  G("F",1,[
+    "How satisfied were you with…",
+    "ما مدى رضاك عن…",
+    "Wie zufrieden waren Sie mit…"
+  ],[
+    ["the quality of your accommodation","جودة مكان إقامتك","der Qualität Ihrer Unterkunft"],
+    ["restaurants and food","المطاعم والطعام","den Restaurants und dem Essen"],
+    ["food options that suit your dietary or religious needs (e.g., halal)","خيارات الطعام المناسبة لاحتياجاتك الغذائية أو الدينية (مثل الحلال)","Speisen, die zu Ihren Ernährungsbedürfnissen oder religiösen Bedürfnissen passen (z. B. halal)"],
+    ["getting around (transport and access)","التنقل (المواصلات وسهولة الوصول)","der Fortbewegung (Verkehr und Erreichbarkeit)"],
+    ["tourist information and signs","المعلومات السياحية واللافتات الإرشادية","Touristeninformation und Beschilderung"],
+    ["cleanliness of tourist places","نظافة الأماكن السياحية","der Sauberkeit der touristischen Orte"],
+    ["hospitality of local people","حسن ضيافة السكان المحليين","der Gastfreundschaft der Einheimischen"],
+    ["safety and security","الأمن والسلامة","der Sicherheit"],
+    ["the value you got for the money you spent","القيمة التي حصلت عليها مقابل ما أنفقته","dem Preis-Leistungs-Verhältnis"],
+    ["your visit overall","زيارتك بشكل عام","Ihrem Besuch insgesamt"]
+  ],"s"),
+  G("F",11,["","",""],[
+    ["My visit met my expectations","لبت زيارتي توقعاتي","Mein Besuch hat meine Erwartungen erfüllt"]
+  ],"a")
+]},
+{t:[
+  "Travelling outside the summer season",
+  "السفر خارج موسم الصيف",
+  "Reisen außerhalb der Sommersaison"
+],q:[
+  G("G",1,[
+    "I would be less likely to visit between October and May because…",
+    "سأكون أقل رغبة في الزيارة بين أكتوبر ومايو لأن…",
+    "Ich würde zwischen Oktober und Mai seltener nach BiH reisen, weil…"
+  ],[
+    ["the weather is less pleasant","الطقس أقل ملاءمة","das Wetter weniger angenehm ist"],
+    ["fewer attractions and facilities are open","عدد المعالم والمرافق المفتوحة أقل","weniger Attraktionen und Einrichtungen geöffnet sind"],
+    ["there are fewer flights and connections","الرحلات الجوية وخطوط النقل أقل","es weniger Flug- und Verkehrsverbindungen gibt"],
+    ["my work, school or family schedule doesn’t allow it","جدول عملي أو دراستي أو التزاماتي العائلية لا يسمح بذلك","mein Arbeits-, Schul- oder Familienkalender das nicht zulässt"],
+    ["there is too little information about what B&H offers outside summer","المعلومات عما تقدمه البوسنة والهرسك خارج الصيف قليلة","es zu wenige Informationen über das Angebot von BiH außerhalb des Sommers gibt"],
+    ["there are fewer services that meet my needs (e.g., halal options, services in my language)","الخدمات التي تناسب احتياجاتي أقل (مثل الخيارات الحلال أو الخدمات بلغتي)","es weniger Dienstleistungen gibt, die meinen Bedürfnissen entsprechen (z. B. Halal-Angebote oder Angebote in meiner Sprache)"]
+  ],"a"),
+  G("G",7,[
+    "I would be more likely to visit between October and May if…",
+    "سأكون أكثر رغبة في الزيارة بين أكتوبر ومايو إذا…",
+    "Ich würde zwischen Oktober und Mai eher nach BiH reisen, wenn…"
+  ],[
+    ["flights and accommodation were cheaper","كانت الرحلات الجوية والإقامة أرخص","Flüge und Unterkünfte günstiger wären"],
+    ["there were more city and cultural events","أقيمت المزيد من الفعاليات في المدن والفعاليات الثقافية","es mehr Stadt- und Kulturveranstaltungen gäbe"],
+    ["winter sports and snow activities were available","توفرت رياضات الشتاء وأنشطة الثلوج","Wintersport und Schneeaktivitäten angeboten würden"],
+    ["there were spa and wellness packages","وجدت باقات سبا واستجمام","es Spa- und Wellnesspakete gäbe"],
+    ["there were nature and countryside packages for spring or autumn","وجدت باقات للطبيعة والسياحة الريفية في الربيع أو الخريف","es Angebote für Natur- und Landtourismus im Frühling oder Herbst gäbe"],
+    ["there were direct flights and better transport","وجدت رحلات مباشرة ومواصلات أفضل","es Direktflüge und bessere Verkehrsverbindungen gäbe"]
+  ],"a")
+]},
+{t:[
+  "Returning to B&H",
+  "زيارة البوسنة والهرسك مرة أخرى",
+  "Erneuter Besuch"
+],q:[
+  G("H",1,["","",""],[
+    ["I plan to visit B&H again","أخطط لزيارة البوسنة والهرسك مرة أخرى","Ich plane, BiH wieder zu besuchen"],
+    ["I would recommend B&H to friends and family","سأنصح أصدقائي وعائلتي بزيارتها","Ich würde BiH Freunden und Familie weiterempfehlen"],
+    ["I would choose B&H again over similar destinations","سأختار البوسنة والهرسك مجددًا بدلًا من وجهات مشابهة","Ich würde mich wieder für BiH statt für ähnliche Reiseziele entscheiden"]
+  ],"a"),
+  G("H",4,[
+    "I would consider visiting B&H…",
+    "سأفكر في زيارة البوسنة والهرسك…",
+    "Ich würde einen Besuch in BiH in Betracht ziehen…"
+  ],[
+    ["in spring (March–May)","في الربيع (مارس–مايو)","im Frühling (März–Mai)"],
+    ["in autumn (October–November)","في الخريف ضمن تعريف هذا الاستبيان (أكتوبر–نوفمبر)","im Herbst gemäß der Definition dieses Fragebogens (Oktober–November)"],
+    ["in winter (December–February)","في الشتاء (ديسمبر–فبراير)","im Winter (Dezember–Februar)"]
+  ],"a"),
+  Q("I1","x",[
+    "What should B&H improve most? (optional)",
+    "ما أكثر شيء ينبغي أن تحسنه البوسنة والهرسك؟ (اختياري)",
+    "Was sollte BiH am meisten verbessern? (freiwillig)"
+  ],null),
+  Q("I2","x",[
+    "What would most encourage you to visit outside summer? (optional)",
+    "ما الذي سيشجعك أكثر على الزيارة خارج الصيف؟ (اختياري)",
+    "Was würde Sie am meisten dazu bewegen, außerhalb des Sommers zu reisen? (freiwillig)"
+  ],null)
+]}
+];
 
+/* Conservatively identified optional sensitive-response items. */
+const SENSITIVE_IDS=new Set(["B5","C4","D10","D11","F3","G6"]);
+const SELECTED_EU=new Set(["Austria","Germany","Italy","France","Poland"]);
+const SELECTED_GCC=new Set(["Saudi Arabia","Kuwait","Qatar","United Arab Emirates"]);
 
-/* ===== Turkish (tr): looked up by the English text; explicit 4th array items win ===== */
-const UI_TR={
-ttl:"Bosna-Hersek Ziyaretiniz",sub:"Ziyaretçi anketi",hello:"Bu araştırmaya gösterdiğiniz ilgi için teşekkür ederiz",
-intro:"Ziyaretçilerin Bosna-Hersek'i neden seçtiğini, ne zaman seyahat ettiğini ve onları yeniden ziyaret etmeye teşvik eden unsurları anlamak istiyoruz.",
-pts:["Yaklaşık 10–15 dakika sürer.","Anonim ve gönüllüdür – ad veya iletişim bilgisi toplamıyoruz.","Saraybosna'daki International Burch University'de yürütülen bir MBA tezinin parçasıdır."],
-defs:"Bu ankette “yaz sezonu” Haziran–Eylül, “sezon dışı dönem” ise Ekim–Mayıs anlamına gelir. Lütfen Bosna-Hersek'e yaptığınız en son ziyareti dikkate alarak yanıtlayın.",
-cons:"18 yaşında veya daha büyüğüm ve araştırmaya katılmayı kabul ediyorum.",
-start:"Ankete başla",next:"İleri",back:"Geri",send:"Gönder",step:"Adım {0} / {1}",
-req:"Lütfen işaretlenen soruları yanıtlayın.",max:"En fazla 3 seçenek işaretleyebilirsiniz.",
-thx:"Teşekkürler!",thx2:"Yanıtlarınız kaydedildi. Bosna-Hersek'te turizmin geliştirilmesine katkı sağlayacaktır.",
-no:"İlginiz için teşekkürler. Bu anket yalnızca Bosna-Hersek dışında yaşayan ve ülkeyi ziyaret etmiş kişilere yöneliktir.",
-err:"Yanıtlarınız kaydedilemedi. Bağlantınızı kontrol edip tekrar “Gönder”e dokunun – hiçbir şey kaybolmadı.",
-sending:"Kaydediliyor…",sel:"Seçin…"};
-for(const k in UI_TR)UI[k][3]=UI_TR[k];
-SC.a[3]=["Kesinlikle katılmıyorum","Kesinlikle katılıyorum"];SC.s[3]=["Hiç memnun değilim","Çok memnunum"];
-const TR={
-"Yes":"Evet","No":"Hayır","Earlier":"Daha önce","Other":"Diğer","Prefer not to say":"Belirtmek istemiyorum",
-"January":"Ocak","February":"Şubat","March":"Mart","April":"Nisan","May":"Mayıs","June":"Haziran","July":"Temmuz","August":"Ağustos","September":"Eylül","October":"Ekim","November":"Kasım","December":"Aralık",
-"Austria":"Avusturya","Germany":"Almanya","Italy":"İtalya","France":"Fransa","Poland":"Polonya","Other EU country":"Diğer AB ülkesi","Saudi Arabia":"Suudi Arabistan","Kuwait":"Kuveyt","Qatar":"Katar","United Arab Emirates":"Birleşik Arap Emirlikleri","Other GCC country":"Diğer Körfez ülkesi","Other country":"Diğer ülke",
-"< 1,500":"< 1.500","1,500–2,999":"1.500–2.999","3,000–4,999":"3.000–4.999","5,000–7,999":"5.000–7.999","8,000+":"8.000+",
-"About you":"Sizin hakkınızda","Which country do you live in?":"Hangi ülkede yaşıyorsunuz?","Do you live in Bosnia and Herzegovina?":"Bosna-Hersek'te mi yaşıyorsunuz?","Have you ever visited B&H?":"Bosna-Hersek'i daha önce ziyaret ettiniz mi?",
-"Gender":"Cinsiyet","Female":"Kadın","Male":"Erkek","How old are you?":"Kaç yaşındasınız?","What is your highest level of education?":"Tamamladığınız en yüksek eğitim düzeyi",
-"Secondary school or below":"Lise veya altı","Bachelor’s degree":"Lisans","Master’s degree":"Yüksek lisans","Doctorate":"Doktora",
-"Monthly household income in EUR (optional)":"Aylık hane geliri, Euro cinsinden (isteğe bağlı)",
-"Your trip":"Seyahatiniz","Was your latest trip to B&H your first visit?":"Bosna-Hersek'e son seyahatiniz ilk ziyaretiniz miydi?","How many times had you visited B&H before?":"Daha önce kaç kez ziyaret etmiştiniz?",
-"In which month did that trip start?":"Bu seyahat hangi ayda başladı?","In which year did that trip take place?":"Hangi yıl?","How many nights did you stay in B&H?":"Bosna-Hersek'te kaç gece kaldınız?",
-"What was the main reason for your trip?":"Seyahatinizin ana nedeni neydi?","Holiday and relaxation":"Tatil ve dinlenme","Culture, history or religious sites":"Kültür, tarih veya dini mekânlar","Nature and outdoor activities":"Doğa ve açık hava etkinlikleri","Spa, health or wellness":"Spa, sağlık veya wellness","Visiting friends or relatives":"Arkadaş veya akraba ziyareti","Business or work":"İş veya çalışma amaçlı","Property I own or may buy":"Sahip olduğum ya da satın almayı düşündüğüm mülk",
-"Who did you travel with?":"Kiminle seyahat ettiniz?","Alone":"Yalnız","Partner only":"Yalnızca eşim/partnerimle","Family with children":"Çocuklarımla ailece","Friends":"Arkadaşlarımla","Organised group":"Organize bir grupla",
-"Which parts of B&H did you visit? (select all that apply)":"Bosna-Hersek'in hangi bölgelerini ziyaret ettiniz? (Birden fazla seçebilirsiniz)","Sarajevo and surroundings":"Saraybosna ve çevresi","Mostar and Herzegovina":"Mostar ve Hersek","Central Bosnia (Travnik, Jajce)":"Orta Bosna (Travnik, Jajce)","Una-Sana (Bihać)":"Una-Sana (Bihać)","Banja Luka and the north":"Banja Luka ve kuzey","East / north-east (Višegrad, Tuzla)":"Doğu / kuzeydoğu (Višegrad, Tuzla)",
-"Where did you mainly stay?":"Çoğunlukla nerede konakladınız?","Hotel":"Otel","Apartment or holiday rental":"Apart daire veya kiralık tatil evi","Hostel or guesthouse":"Hostel veya pansiyon","Property I own":"Sahibi olduğum mülk","With friends or relatives":"Arkadaş veya akraba yanında",
-"How did you organise the trip?":"Seyahatinizi nasıl organize ettiniz?","On my own":"Kendi başıma","Package tour":"Paket tur","Tailor-made through a travel agency":"Seyahat acentesi aracılığıyla, kişiye özel",
-"How many nights did you stay in B&H?":"Bosna-Hersek'te kaç gece kaldınız?",
-"Where did you get information when planning your trip? (up to 3, optional)":"Planlama yaparken bilgiyi nereden edindiniz? (en fazla 3, isteğe bağlı)","Friends and relatives":"Arkadaşlar ve akrabalar","Social media and influencers":"Sosyal medya ve fenomenler","Search engines and websites":"Arama motorları ve web siteleri","Booking and review platforms":"Rezervasyon ve yorum platformları","Travel agency or tour operator":"Seyahat acentesi veya tur operatörü","My earlier visits":"Önceki ziyaretlerim",
-"Why did you travel at that time?":"O dönemde neden seyahat ettiniz?","I travelled in that month because…":"O ay seyahat ettim çünkü…",
-"the timing suited my school holidays or annual leave":"zamanlama okul tatilime veya iş iznime uygundu","the weather was pleasant":"hava güzeldi","I wanted to escape the heat at home":"ülkemdeki sıcaklardan kaçmak istedim","it coincided with a religious or public holiday (such as Eid)":"dini veya resmi bir tatile (örneğin Bayram) denk geldi","there was an event, festival or activity season I wanted to enjoy (e.g., skiing)":"yararlanmak istediğim bir etkinlik, festival veya aktivite sezonu vardı (örneğin kayak)","flights and accommodation were cheaper":"uçuşlar ve konaklama daha ucuzdu","there were convenient flights or transport connections":"uygun uçuşlar veya ulaşım bağlantıları vardı","friends or relatives could join me or host me":"arkadaşlarım veya akrabalarım bana eşlik edebildi ya da beni ağırlayabildi",
-"What attracted you to B&H?":"Sizi ne cezbetti?","I chose B&H because…":"Bosna-Hersek'i seçtim çünkü…",
-"of its natural scenery":"doğal manzaraları beni cezbetti","I wanted to experience local culture and traditions":"yerel kültürü ve gelenekleri deneyimlemek istedim","historical sites and monuments interest me":"tarihi yerler ve anıtlar ilgimi çekiyor","I wanted to relax and get away from everyday routine":"dinlenmek ve günlük rutinden uzaklaşmak istedim","the climate suits me":"iklimi bana uyuyor","I enjoy outdoor activities such as hiking, rafting or skiing":"yürüyüş, rafting veya kayak gibi açık hava etkinliklerinden hoşlanıyorum","it is an affordable destination":"uygun fiyatlı bir destinasyon","family or friends recommended it":"ailem veya arkadaşlarım tavsiye etti","social media or online content inspired me":"sosyal medya veya çevrimiçi içerikler bana ilham verdi","I wanted to visit religious or spiritual places":"dini veya manevi mekânları ziyaret etmek istedim","halal food and prayer facilities are available":"helal yemek ve ibadet imkânları bulunuyor","I wanted to use spa and wellness facilities":"spa ve wellness olanaklarından yararlanmak istedim","I wanted to see friends or relatives who live there":"orada yaşayan arkadaş veya akrabalarımı görmek istedim",
-"Your impression of B&H":"Bosna-Hersek hakkındaki izleniminiz","In my view, B&H…":"Bana göre Bosna-Hersek…",
-"is a safe place to visit":"ziyaret etmek için güvenli bir yer","has beautiful landscapes and nature":"güzel manzaralara ve doğaya sahip","has a rich culture and history to explore":"keşfedilecek zengin bir kültüre ve tarihe sahip","offers good value for money":"ödenen ücrete kıyasla iyi bir değer sunuyor","has good enough tourism infrastructure (roads, signs, accommodation)":"yeterli bir turizm altyapısına sahip (yollar, tabelalar, konaklama)","is welcoming to visitors like me":"benim gibi ziyaretçilere karşı misafirperver","has a good reputation in my home country":"ülkemde iyi bir üne sahip","is a good place to visit outside the summer months (October–May)":"yaz aylarının dışında (Ekim–Mayıs) da ziyaret etmeye değer","has plenty to do throughout the year":"yıl boyunca yapılacak çok şey sunuyor",
-"How was your visit?":"Ziyaretiniz nasıldı?","How satisfied were you with…":"Aşağıdakilerden ne kadar memnun kaldınız?",
-"the quality of your accommodation":"Konaklamanızın kalitesi","restaurants and food":"Restoranlar ve yemekler","food options that suit your dietary or religious needs (e.g., halal)":"Beslenme veya dini ihtiyaçlarınıza uygun yemek seçenekleri (örneğin helal)","getting around (transport and access)":"Ulaşım ve erişim kolaylığı","tourist information and signs":"Turist bilgilendirmesi ve tabelalar","cleanliness of tourist places":"Turistik yerlerin temizliği","hospitality of local people":"Yerel halkın misafirperverliği","safety and security":"Güvenlik","the value you got for the money you spent":"Ödediğiniz ücretin karşılığında aldığınız değer","your visit overall":"Genel olarak ziyaretiniz","My visit met my expectations":"Ziyaretim beklentilerimi karşıladı",
-"Travelling outside the summer season":"Yaz sezonu dışında seyahat","I would be less likely to visit between October and May because…":"Ekim–Mayıs arasında ziyaret etme olasılığım daha düşük olurdu çünkü…",
-"the weather is less pleasant":"hava koşulları daha az uygun","fewer attractions and facilities are open":"daha az sayıda gezilecek yer ve tesis açık","there are fewer flights and connections":"daha az uçuş ve ulaşım bağlantısı var","my work, school or family schedule doesn’t allow it":"iş, okul veya aile programım buna izin vermiyor","there is too little information about what B&H offers outside summer":"Bosna-Hersek'in yaz dışında sunduklarına dair çok az bilgi var","there are fewer services that meet my needs (e.g., halal options, services in my language)":"ihtiyaçlarıma uygun hizmetler daha az (örneğin helal seçenekler veya kendi dilimde hizmetler)",
-"I would be more likely to visit between October and May if…":"Ekim–Mayıs arasında ziyaret etme olasılığım şu durumlarda daha yüksek olurdu:",
-"there were more city and cultural events":"şehir ve kültür etkinlikleri düzenlenseydi","winter sports and snow activities were available":"kış sporları ve kar etkinlikleri sunulsaydı","there were spa and wellness packages":"spa ve wellness paketleri sunulsaydı","there were nature and countryside packages for spring or autumn":"ilkbahar veya sonbahar için doğa ve kırsal turizm paketleri olsaydı","there were direct flights and better transport":"direkt uçuşlar ve daha iyi ulaşım olsaydı",
-"Returning to B&H":"Tekrar ziyaret","I plan to visit B&H again":"Bosna-Hersek'i tekrar ziyaret etmeyi planlıyorum","I would recommend B&H to friends and family":"Bosna-Hersek'i arkadaşlarıma ve aileme tavsiye ederim","I would choose B&H again over similar destinations":"Benzer destinasyonlar yerine yine Bosna-Hersek'i seçerdim","I would consider visiting B&H…":"Bosna-Hersek'i şu dönemlerde ziyaret etmeyi düşünürüm:",
-"in spring (March–May)":"ilkbaharda (Mart–Mayıs)","in autumn (October–November)":"sonbaharda (Ekim–Kasım)","in winter (December–February)":"kışın (Aralık–Şubat)",
-"What should B&H improve most? (optional)":"Bosna-Hersek en çok neyi geliştirmeli? (isteğe bağlı)","What would most encourage you to visit outside summer? (optional)":"Yaz dışında ziyaret etmeniz için sizi en çok ne teşvik eder? (isteğe bağlı)"};
-const KEY='bh_survey_v2',$=id=>document.getElementById(id),t=a=>a[li]!==undefined?a[li]:(TR[a[0]]??a[0]);
-let li=0,step=0,ans={},t0=Date.now(),sid=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2);
-const store={get(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}},set(){try{localStorage.setItem(KEY,JSON.stringify({ans,step,sid,li,t0}))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
-function detect(){const q=new URLSearchParams(location.search).get('lang');if(LG.includes(q))return LG.indexOf(q);
- for(const l of (navigator.languages||[navigator.language||'en'])){const k=l.slice(0,2).toLowerCase();if(k=='ar')return 1;if(k=='de')return 2;if(k=='tr')return 3;if(k=='en')return 0}return 0}
-const vis=q=>!q.dep||ans[q.dep[0]]===q.dep[1];
-const ck=(n,v,type)=>type=='radio'?ans[n]===v:(ans[n]||'').split('; ').includes(v);
-function opts(q){const type=q.ty=='m'?'checkbox':'radio';return q.o.map(o=>`<label class="opt"><input type="${type}" name="${q.id}" value="${o[0]}" ${q.max?`data-max="${q.max}"`:''} ${ck(q.id,o[0],type)?'checked':''}><span>${t(o)}</span></label>`).join('')}
+function newId(){
+  if(window.crypto && typeof crypto.randomUUID==="function") return crypto.randomUUID();
+  if(window.crypto && typeof crypto.getRandomValues==="function"){
+    const bytes=new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  return null;
+}
+let sid=newId();
+
+function detect(){
+  const query=new URLSearchParams(location.search).get("lang");
+  if(LG.includes(query)) return LG.indexOf(query);
+  for(const language of navigator.languages||[navigator.language||"en"]){
+    const code=language.slice(0,2).toLowerCase();
+    if(LG.includes(code)) return LG.indexOf(code);
+  }
+  return 0;
+}
+function liveReady(){
+  const allInfo=Object.values(CONFIG.INFO).every(value=>
+    Array.isArray(value) && value.length===3 &&
+    value.every(v=>typeof v==="string" && v.trim().length>0)
+  );
+  return CONFIG.MODE==="live" &&
+    CONFIG.ETHICS_APPROVAL_CONFIRMED===true &&
+    CONFIG.PRIVACY_REVIEW_CONFIRMED===true &&
+    CONFIG.BACKEND_TEST_CONFIRMED===true &&
+    allInfo && validPeriodConfig() && sid!==null &&
+    /^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(ENDPOINT);
+}
+function currentVisit(){return ans.S4==="Current visit";}
+function visible(q){
+  return (!q.dep || ans[q.dep[0]]===q.dep[1]) &&
+         (!SENSITIVE_IDS.has(q.id) || ans.sensitive_consent===true);
+}
+function itemVisible(id){
+  return !SENSITIVE_IDS.has(id) || ans.sensitive_consent===true;
+}
+function selected(name,value,type){
+  return type==="radio"
+    ? String(ans[name]??"")===String(value)
+    : String(ans[name]||"").split("; ").includes(value);
+}
+function optionalClear(id){
+  return `<button type="button" class="clear" data-clear="${esc(id)}">${E(UI.clear)}</button>`;
+}
+function optionsHTML(q){
+  const type=q.ty==="m"?"checkbox":"radio";
+  return q.o.map(o=>`
+    <label class="opt">
+      <input type="${type}" name="${esc(q.id)}" value="${esc(o[0])}"
+        ${q.max?`data-max="${q.max}"`:""}
+        ${selected(q.id,o[0],type)?"checked":""}>
+      <span>${E(o)}</span>
+    </label>`).join("");
+}
+function labelFor(q){
+  if(q.id==="B4" && currentVisit()) return [
+    "How many nights in total do you plan to stay in B&H on this visit?",
+    "كم ليلة إجمالًا تخطط للإقامة في البوسنة والهرسك خلال هذه الزيارة؟",
+    "Wie viele Nächte planen Sie bei diesem Besuch insgesamt in BiH zu verbringen?"
+  ];
+  return q.l;
+}
+function statementFor(id,item){
+  if(id==="F11" && currentVisit()) return [
+    "So far, this visit has met my expectations",
+    "لبت هذه الزيارة توقعاتي حتى الآن",
+    "Bisher hat dieser Besuch meine Erwartungen erfüllt"
+  ];
+  return item;
+}
+function groupStem(q){
+  if(q.pre==="F" && q.start===1 && currentVisit()) return [
+    "How satisfied are you so far with…",
+    "ما مدى رضاك حتى الآن عن…",
+    "Wie zufrieden sind Sie bisher mit…"
+  ];
+  return q.stem;
+}
 function renderQ(q){
- if(q.ty=='l'){const e=SC[q.sc][li];return (t(q.stem)?`<div class="stem">${t(q.stem)}</div>`:'')+q.items.map((it,i)=>{const k=q.pre+(q.start+i);return `<div class="li" data-id="${k}"><p>${t(it)}</p><div class="sc" role="radiogroup" aria-label="${k}">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="${k}" value="${v}" ${ans[k]==v?'checked':''}><span>${v}</span></label>`).join('')}</div><div class="ends"><span>1 – ${e[0]}</span><span>5 – ${e[1]}</span></div></div>`}).join('')}
- if(!vis(q))return '';const r=q.opt?'':' req',L=t(q.l);
- if(q.ty=='sel')return `<div class="q" data-id="${q.id}"><label class="t${r}" for="${q.id}">${L}</label><select id="${q.id}" name="${q.id}"><option value="">${t(UI.sel)}</option>${q.o.map(x=>`<option value="${x[0]}" ${ans[q.id]===x[0]?'selected':''}>${t(x)}</option>`).join('')}</select></div>`;
- if(q.ty=='n')return `<div class="q" data-id="${q.id}"><label class="t${r}" for="${q.id}">${L}</label><input type="number" inputmode="numeric" min="0" max="365" id="${q.id}" name="${q.id}" value="${ans[q.id]??''}"></div>`;
- if(q.ty=='x')return `<div class="q" data-id="${q.id}"><label class="t" for="${q.id}">${L}</label><textarea rows="3" id="${q.id}" name="${q.id}">${ans[q.id]||''}</textarea></div>`;
- return `<fieldset class="q" data-id="${q.id}"><legend class="${r}">${L}</legend>${opts(q)}</fieldset>`}
-function draw(){const d=document.documentElement;d.lang=LG[li];d.dir=li==1?'rtl':'ltr';$('ttl').textContent=t(UI.ttl);$('sub').textContent=t(UI.sub);document.title=t(UI.ttl);
- $('lang').innerHTML=LG.map((c,i)=>`<button type="button" aria-pressed="${i==li}" data-l="${i}" lang="${c}">${NAMES[i]}</button>`).join('');
- const n=PAGES.length,run=step>=1;$('prog').style.display=step<0?'none':'';$('stp').textContent=run?t(UI.step).replace('{0}',step).replace('{1}',n):'';$('bar').style.width=(Math.max(step,0)/n*100)+'%';let h='';
- if(step==-1)h=`<div class="done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><h2 tabindex="-1" id="h">${t(UI.thx)}</h2><p>${t(UI.thx2)}</p></div>`;
- else if(step==-2)h=`<div class="done"><p>${t(UI.no)}</p></div>`;
- else if(step==0)h=`<h2 tabindex="-1" id="h">${t(UI.hello)}</h2><p>${t(UI.intro)}</p><ul class="pts">${t(UI.pts).map(x=>`<li>${x}</li>`).join('')}</ul><div class="note">${t(UI.defs)}</div>`+SCR.map(renderQ).join('')+`<label class="opt" data-id="cons"><input type="checkbox" id="cons" ${ans.cons?'checked':''}><span>${t(UI.cons)}</span></label><div class="msg" id="msg" role="alert"></div><div class="nav"><button class="btn" data-go="1" type="button">${t(UI.start)}</button></div>`;
- else{const p=PAGES[step-1];h=`<h2 tabindex="-1" id="h">${t(p.t)}</h2>`+p.q.map(renderQ).join('')+`<input class="hp" tabindex="-1" autocomplete="off" name="website" aria-hidden="true"><div class="msg" id="msg" role="alert"></div><div class="nav"><button class="btn g" data-go="-1" type="button">${t(UI.back)}</button><button class="btn" data-go="1" id="nx" type="button">${t(step==n?UI.send:UI.next)}</button></div>`}
- $('card').innerHTML=h}
-function collect(){document.querySelectorAll('#card input:not(.hp),#card select,#card textarea').forEach(e=>{const n=e.name||e.id;if(!n)return;
- if(e.type=='radio'){if(e.checked)ans[n]=e.closest('.sc')?+e.value:e.value}
- else if(e.type=='checkbox'){if(e.id=='cons')ans.cons=e.checked;else ans[n]=[...document.querySelectorAll(`input[type=checkbox][name="${n}"]:checked`)].map(x=>x.value).join('; ')}
- else ans[n]=e.value.trim()})}
-function missing(){const ids=[];
- if(step==0){SCR.forEach(q=>{if(!ans[q.id])ids.push(q.id)});if(!ans.cons)ids.push('cons');return ids}
- PAGES[step-1].q.forEach(q=>{if(q.ty=='l'){if(REQUIRE_ALL)q.items.forEach((_,i)=>{const k=q.pre+(q.start+i);if(!ans[k])ids.push(k)})}
-  else if(!q.opt&&vis(q)&&(ans[q.id]===undefined||ans[q.id]===''))ids.push(q.id)});return ids}
-async function submit(){const b=$('nx');b.disabled=true;$('msg').textContent=t(UI.sending);
- if(document.querySelector('.hp').value){step=-1;draw();return}
- const row={submission_id:sid,submitted_at:new Date().toISOString(),language:LG[li],consent:'Yes',duration_sec:Math.round((Date.now()-t0)/1000),...ans};delete row.cons;if(row.B1!=='No')delete row.B2;
- try{if(!ENDPOINT.startsWith('http'))throw new Error('ENDPOINT not set');
-  const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(row)});
-  const x=await r.text();if(!x.startsWith('ok'))throw new Error(x.replace(/<[^>]*>/g,' ').slice(0,120));
-  store.clear();step=-1;draw();scrollTo(0,0)}
- catch(e){b.disabled=false;$('msg').textContent=t(UI.err)+' ['+e.message+']'}}
-function focusH(){const h=$('h');if(h)h.focus({preventScroll:true});scrollTo(0,0)}
-document.addEventListener('click',e=>{const l=e.target.closest('[data-l]');if(l){collect();li=+l.dataset.l;try{localStorage.setItem('bh_lang',li)}catch(x){}store.set();draw();return}
- const g=e.target.closest('[data-go]');if(!g)return;collect();const d=+g.dataset.go;
- if(d>0){document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));const m=missing();
-  if(m.length){m.forEach(id=>{const el=document.querySelector(`[data-id="${id}"]`);el&&el.classList.add('miss')});$('msg').textContent=t(UI.req);const f=document.querySelector(`[data-id="${m[0]}"]`);f&&f.scrollIntoView({block:'center',behavior:'smooth'});return}
-  if(step==0&&(ans.S2!=='No'||ans.S3!=='Yes')){step=-2;draw();scrollTo(0,0);return}
-  if(step==PAGES.length){submit();return}}
- step+=d;store.set();draw();focusH()});
-document.addEventListener('change',e=>{const el=e.target;
- if(el.dataset&&el.dataset.max){const n=document.querySelectorAll(`input[name="${el.name}"]:checked`).length;if(n>+el.dataset.max){el.checked=false;$('msg').textContent=t(UI.max);return}}
- collect();store.set();const q=PAGES[step-1]&&PAGES[step-1].q.find(x=>x.dep&&x.dep[0]===el.name);if(q){const y=scrollY;draw();scrollTo(0,y)}});
-const sv=store.get();li=detect();
-try{const sl=localStorage.getItem('bh_lang');if(sl!==null&&!new URLSearchParams(location.search).get('lang'))li=+sl}catch(e){}
-if(sv&&sv.step>=0&&sv.sid){ans=sv.ans||{};step=sv.step;sid=sv.sid;t0=sv.t0||t0}
+  if(q.ty==="l"){
+    const ends=SC[q.sc][li];
+    const stem=t(groupStem(q));
+    return (stem?`<div class="stem">${esc(stem)}</div>`:"")+
+      `<p class="help">${E(UI.ratingHelp)}</p>`+
+      q.items.map((item,i)=>{
+        const id=q.pre+(q.start+i);
+        if(!itemVisible(id)) return "";
+        const label=statementFor(id,item);
+        const scoreLabels=SCALE_LABELS[q.sc][li];
+        return `
+        <div class="li" data-id="${esc(id)}">
+          <p id="label_${esc(id)}">${E(label)}</p>
+          <div role="radiogroup" aria-labelledby="label_${esc(id)}">
+            <div class="sc">
+              ${[1,2,3,4,5].map(v=>`
+                <label>
+                  <input type="radio" name="${esc(id)}" value="${v}"
+                    aria-label="${esc(v+" – "+scoreLabels[v-1])}"
+                    ${String(ans[id]??"")===String(v)?"checked":""}>
+                  <span>${v}</span>
+                </label>`).join("")}
+            </div>
+            <div class="ends">
+              <span>1 – ${esc(ends[0])}</span>
+              <span>5 – ${esc(ends[1])}</span>
+            </div>
+            <div class="extra">
+              ${[["NA",UI.na],["DK",UI.dk],["PNTS",UI.pnts]].map(([value,label])=>`
+                <label class="opt">
+                  <input type="radio" name="${esc(id)}" value="${value}"
+                    ${ans[id]===value?"checked":""}>
+                  <span>${E(label)}</span>
+                </label>`).join("")}
+            </div>
+          </div>
+          ${optionalClear(id)}
+        </div>`;
+      }).join("");
+  }
+
+  if(!visible(q)) return "";
+  const required=q.opt?"":" req";
+  const label=E(labelFor(q));
+  const help=q.opt?`<p class="help">${E(UI.optional)}</p>`:"";
+  const clear=q.opt?optionalClear(q.id):"";
+
+  if(q.ty==="sel") return `
+    <div class="q" data-id="${esc(q.id)}">
+      <label class="t${required}" for="${esc(q.id)}">${label}</label>
+      ${help}
+      <select id="${esc(q.id)}" name="${esc(q.id)}" ${q.opt?"":'aria-required="true"'}>
+        <option value="">${E(UI.sel)}</option>
+        ${q.o.map(o=>`<option value="${esc(o[0])}"
+          ${ans[q.id]===o[0]?"selected":""}>${E(o)}</option>`).join("")}
+      </select>
+      ${clear}
+    </div>`;
+
+  if(q.ty==="n") return `
+    <div class="q" data-id="${esc(q.id)}">
+      <label class="t${required}" for="${esc(q.id)}">${label}</label>
+      ${help}
+      <input type="number" inputmode="numeric" min="0" max="365" step="1"
+        id="${esc(q.id)}" name="${esc(q.id)}"
+        ${q.opt?"":'aria-required="true"'}
+        value="${esc(ans[q.id]??"")}">
+      ${clear}
+    </div>`;
+
+  if(q.ty==="x") return `
+    <div class="q" data-id="${esc(q.id)}">
+      <label class="t" for="${esc(q.id)}">${label}</label>
+      <p class="help" id="help_${esc(q.id)}">${E(UI.textHelp)}</p>
+      <textarea rows="3" maxlength="1000"
+        id="${esc(q.id)}" name="${esc(q.id)}"
+        aria-describedby="help_${esc(q.id)}">${esc(ans[q.id]||"")}</textarea>
+      ${clear}
+    </div>`;
+
+  return `
+    <fieldset class="q" data-id="${esc(q.id)}">
+      <legend class="${required}">${label}</legend>
+      ${help}${optionsHTML(q)}${clear}
+    </fieldset>`;
+}
+function privacyHTML(){
+  return `
+    <details>
+      <summary>${E(UI.privacy)}</summary>
+      <p>${E(UI.privacyGeneral)}</p>
+      <p>${E(UI.technicalPrivacy)}</p>
+      <dl>
+        ${Object.keys(INFO_LABELS).map(key=>{
+          const value=CONFIG.INFO[key]?.[li]?.trim();
+          return `<dt>${E(INFO_LABELS[key])}</dt>
+                  <dd>${value?esc(value):E(UI.pending)}</dd>`;
+        }).join("")}
+      </dl>
+      <p class="help">Notice version: ${esc(CONFIG.NOTICE_VERSION)}</p>
+    </details>`;
+}
+function periodHTML(){
+  if(!CONFIG.VISIT_START&&!CONFIG.VISIT_END)
+    return `<p class="help">${E(UI.noCutoff)}</p>`;
+  const end=CONFIG.VISIT_END || new Date().toISOString().slice(0,7);
+  return `<p class="note help">${E(UI.period)}:
+    <bdi>${esc(CONFIG.VISIT_START||"…")} — ${esc(end)}</bdi></p>`;
+}
+function draw(){
+  const doc=document.documentElement;
+  doc.lang=LG[li];
+  doc.dir=li===1?"rtl":"ltr";
+  if(themeOverride) doc.dataset.theme=themeOverride;
+
+  $("ttl").textContent=t(UI.ttl);
+  $("sub").textContent=t(UI.sub);
+  document.title=t(UI.ttl);
+  $("skip").textContent=t(UI.skip);
+  $("theme").textContent=t(UI.theme);
+  $("theme").disabled=busy;
+  $("lang").innerHTML=LG.map((code,i)=>`
+    <button type="button" aria-pressed="${i===li}"
+      data-l="${i}" lang="${code}" ${busy?"disabled":""}>${esc(NAMES[i])}</button>
+  `).join("");
+  $("status").textContent=t(
+    CONFIG.MODE!=="live"?UI.reviewMode:liveReady()?UI.liveMode:UI.blocked
+  );
+  $("footer").textContent=t(UI.footer)+CONFIG.INSTRUMENT_VERSION;
+
+  const n=PAGES.length,run=step>=1;
+  $("prog").style.display=step<0?"none":"";
+  $("stp").textContent=run
+    ?t(UI.step).replace("{0}",step).replace("{1}",n):"";
+  $("bar").style.width=(Math.max(step,0)/n*100)+"%";
+  let h="";
+
+  if(step===-1){
+    const live=receipt!=="";
+    h=`
+      <div class="done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M7.5 12.5l3 3 6-6.5"/>
+        </svg>
+        <h2 tabindex="-1" id="h">${E(live?UI.thx:UI.previewDone)}</h2>
+        <p>${E(live?UI.thx2:UI.previewDone2)}</p>
+        ${live?`<p>${E(UI.reference)}</p><code class="receipt">${esc(receipt)}</code>`:""}
+        ${privacyHTML()}
+        <button type="button" class="minor" data-reset>${E(UI.exit)}</button>
+      </div>`;
+  } else if(step===-2){
+    h=`
+      <div class="done">
+        <h2 tabindex="-1" id="h">${E(UI.no)}</h2>
+        <button type="button" class="minor" data-reset>${E(UI.exit)}</button>
+      </div>`;
+  } else if(step===0){
+    h=`
+      <h2 tabindex="-1" id="h">${E(UI.hello)}</h2>
+      <p>${E(UI.intro)}</p>
+      <ul class="pts">${t(UI.pts).map(v=>`<li>${esc(v)}</li>`).join("")}</ul>
+      <div class="note">${E(UI.defs)}</div>
+      ${periodHTML()}
+      ${privacyHTML()}
+      <p class="help">${E(UI.requiredHelp)}</p>
+      ${SCR.map(renderQ).join("")}
+      <label class="opt req" data-id="cons">
+        <input type="checkbox" id="cons"
+          ${ans.cons?"checked":""} aria-required="true">
+        <span>${E(UI.cons)}</span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="sensitive_consent"
+          ${ans.sensitive_consent?"checked":""}>
+        <span>${E(UI.sensitiveCons)}</span>
+      </label>
+      <p class="help">${E(UI.sensitiveHelp)}</p>
+      <div class="msg" id="msg" role="alert"></div>
+      <div class="nav">
+        <button class="btn" data-go="1" type="button">${E(UI.start)}</button>
+      </div>`;
+  } else {
+    const p=PAGES[step-1];
+    h=`
+      <h2 tabindex="-1" id="h">${E(p.t)}</h2>
+      ${(step===2||step===6)&&currentVisit()
+        ?`<p class="note help">${E(UI.currentHelp)}</p>`:""}
+      ${!ans.sensitive_consent && [2,3,4,6,7].includes(step)
+        ?`<p class="help">${E(UI.sensitiveSkipped)}</p>`:""}
+      ${step===2?periodHTML():""}
+      ${p.q.map(renderQ).join("")}
+      <input class="hp" tabindex="-1" autocomplete="off"
+        name="website" aria-hidden="true">
+      <div class="msg" id="msg" role="alert"></div>
+      <div class="nav">
+        <button class="btn g" data-go="-1" type="button">${E(UI.back)}</button>
+        <button class="btn" data-go="1" id="nx" type="button">
+          ${E(step===n
+            ?(CONFIG.MODE==="live"?UI.send:UI.finishPreview)
+            :UI.next)}
+        </button>
+      </div>
+      <button class="clear" type="button" data-reset>${E(UI.exit)}</button>`;
+  }
+  $("card").innerHTML=h;
+}
+function collect(){
+  document.querySelectorAll("#card input:not(.hp),#card select,#card textarea")
+    .forEach(el=>{
+      const name=el.name||el.id;
+      if(!name) return;
+      if(el.type==="radio"){
+        if(el.checked){
+          ans[name]=el.closest(".sc")?Number(el.value):el.value;
+        }
+      } else if(el.type==="checkbox"){
+        if(name==="cons"||name==="sensitive_consent"){
+          ans[name]=el.checked;
+        } else {
+          ans[name]=Array.from(
+            document.querySelectorAll(`#card input[type="checkbox"][name="${name}"]:checked`)
+          ).map(v=>v.value).join("; ");
+        }
+      } else {
+        ans[name]=el.value.trim();
+      }
+    });
+
+  if(!ans.sensitive_consent){
+    SENSITIVE_IDS.forEach(id=>delete ans[id]);
+  }
+  if(ans.B1!=="No") delete ans.B2;
+  if(ans.S3!=="Yes") delete ans.S4;
+}
+function missing(){
+  const ids=[];
+  if(step===0){
+    SCR.forEach(q=>{
+      if(visible(q)&&!ans[q.id]) ids.push(q.id);
+    });
+    if(!ans.cons) ids.push("cons");
+    return ids;
+  }
+  PAGES[step-1].q.forEach(q=>{
+    if(q.ty==="l"){
+      if(REQUIRE_ALL){
+        q.items.forEach((_,i)=>{
+          const id=q.pre+(q.start+i);
+          if(itemVisible(id)&&!ans[id]) ids.push(id);
+        });
+      }
+    } else if(!q.opt&&visible(q)&&
+      (ans[q.id]===undefined||ans[q.id]==="")){
+      ids.push(q.id);
+    }
+  });
+  return ids;
+}
+function mark(ids,message){
+  document.querySelectorAll(".miss").forEach(el=>el.classList.remove("miss"));
+  ids.forEach(id=>{
+    const el=document.querySelector(`[data-id="${id}"]`);
+    if(el) el.classList.add("miss");
+  });
+  if($("msg")) $("msg").textContent=message;
+  const first=document.querySelector(`[data-id="${ids[0]}"]`);
+  if(first){
+    first.scrollIntoView({
+      block:"center",
+      behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"
+    });
+    const control=first.querySelector("input,select,textarea");
+    if(control) control.focus({preventScroll:true});
+  }
+}
+function dateValid(){
+  if(!validPeriodConfig()) return false;
+  const month=MON.findIndex(m=>m[0]===ans.B3);
+  if(month<0) return false;
+  if(ans.B3Y==="Earlier"){
+    return CONFIG.VISIT_START===null &&
+      yearOptions().some(o=>o[0]==="Earlier");
+  }
+  const year=Number(ans.B3Y);
+  if(!Number.isInteger(year) ||
+     !yearOptions().some(o=>o[0]===String(year))) return false;
+  const date=year*12+month;
+  const now=new Date(),current=now.getFullYear()*12+now.getMonth();
+  const lower=dateIndex(CONFIG.VISIT_START),upper=dateIndex(CONFIG.VISIT_END);
+  return date<=current &&
+    (lower===null||date>=lower) &&
+    (upper===null||date<=upper);
+}
+function nightsValid(){
+  if(ans.B4===""||ans.B4===undefined) return false;
+  const value=Number(ans.B4);
+  return Number.isInteger(value)&&value>=0&&value<=365;
+}
+function focusH(){
+  const h=$("h");
+  if(h) h.focus({preventScroll:true});
+  window.scrollTo(0,0);
+}
+function reset(){
+  if(busy) return;
+  if(Object.keys(ans).length || submissionAttempted || receipt){
+    if(!window.confirm(t(UI.exitConfirm))) return;
+  }
+  ans={};step=0;t0=Date.now();sid=newId();
+  pendingRow=null;receipt="";submissionAttempted=false;
+  draw();focusH();
+}
+function setBusy(value){
+  busy=value;
+  document.querySelectorAll("#card button,#lang button,#theme")
+    .forEach(button=>button.disabled=value);
+}
+function buildRow(){
+  const row={
+    submission_id:sid,
+    submitted_at:new Date().toISOString(),
+    language:LG[li],
+    consent:"Yes",
+    duration_sec:Math.round((Date.now()-t0)/1000),
+    ...ans,
+    sensitive_consent:ans.sensitive_consent?"Yes":"No",
+    instrument_version:CONFIG.INSTRUMENT_VERSION,
+    notice_version:CONFIG.NOTICE_VERSION,
+    visit_window_start:CONFIG.VISIT_START||"",
+    visit_window_end:CONFIG.VISIT_END||""
+  };
+  delete row.cons;
+  if(row.B1!=="No") delete row.B2;
+  if(!ans.sensitive_consent) SENSITIVE_IDS.forEach(id=>delete row[id]);
+
+  /*
+    Preserve original A1 country values.
+    Country classification belongs in analysis/server processing:
+      Selected EU: Austria, Germany, Italy, France, Poland.
+      Selected GCC: Saudi Arabia, Kuwait, Qatar, UAE.
+      Other responses remain supplementary, not silently discarded.
+  */
+  return row;
+}
+async function submit(){
+  if(busy) return;
+
+  if(CONFIG.MODE!=="live"){
+    ans={};pendingRow=null;step=-1;draw();focusH();return;
+  }
+  if(!liveReady()){
+    $("msg").textContent=t(UI.blocked);return;
+  }
+  collect();
+  if(!ans.cons||ans.S2!=="No"||ans.S3!=="Yes"||
+     !["Current visit","Completed visit"].includes(ans.S4)||
+     !ans.A1||!dateValid()||!nightsValid()){
+    $("msg").textContent=t(UI.req);return;
+  }
+
+  const trap=document.querySelector(".hp");
+  if(trap&&trap.value){
+    $("msg").textContent=t(UI.err);return;
+  }
+
+  /*
+    Freeze a submission attempt. If acknowledgement is lost, the next
+    attempt sends the same payload and submission_id, not a new ID.
+    Server-side deduplication is still essential.
+  */
+  if(!pendingRow) pendingRow=buildRow();
+  submissionAttempted=true;
+  setBusy(true);
+  $("msg").textContent=t(UI.sending);
+
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),25000);
+
+  try{
+    const response=await fetch(ENDPOINT,{
+      method:"POST",
+      credentials:"omit",
+      redirect:"follow",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(pendingRow),
+      signal:controller.signal
+    });
+    if(!response.ok) throw new Error("Submission HTTP error");
+    const body=(await response.text()).trim();
+
+    /*
+      Preserves the original Apps Script acknowledgement convention:
+      "ok", or "ok" followed by whitespace/colon.
+      The server must send this only after successful database saving.
+    */
+    if(!/^ok(?:$|[\s:])/i.test(body)){
+      throw new Error("No valid acknowledgement");
+    }
+
+    receipt=sid;
+    ans={};pendingRow=null;step=-1;
+    busy=false;draw();focusH();
+  } catch(error){
+    setBusy(false);
+    $("msg").textContent=t(UI.err);
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+document.addEventListener("click",event=>{
+  const language=event.target.closest("[data-l]");
+  if(language){
+    if(busy) return;
+    collect();
+    li=Number(language.dataset.l);
+    draw();return;
+  }
+
+  if(event.target.closest("#theme")){
+    const dark=themeOverride
+      ?themeOverride==="dark"
+      :matchMedia("(prefers-color-scheme: dark)").matches;
+    themeOverride=dark?"light":"dark";
+    document.documentElement.dataset.theme=themeOverride;
+    return;
+  }
+
+  if(event.target.closest("[data-reset]")){
+    reset();return;
+  }
+
+  const clear=event.target.closest("[data-clear]");
+  if(clear){
+    if(busy||submissionAttempted) return;
+    collect();
+    delete ans[clear.dataset.clear];
+    const y=window.scrollY;draw();window.scrollTo(0,y);
+    return;
+  }
+
+  const go=event.target.closest("[data-go]");
+  if(!go||busy) return;
+
+  /*
+    After an uncertain live submission, prevent changes to its payload.
+    Retry sends exactly the same answers and reference.
+  */
+  if(submissionAttempted&&pendingRow){
+    if(Number(go.dataset.go)>0) submit();
+    return;
+  }
+
+  collect();
+  const direction=Number(go.dataset.go);
+
+  if(direction>0){
+    const required=missing();
+    if(required.length){
+      mark(required,t(UI.req));return;
+    }
+
+    if(step===0&&(ans.S2!=="No"||ans.S3!=="Yes")){
+      ans={};step=-2;draw();focusH();return;
+    }
+
+    if(step===2){
+      if(!dateValid()){
+        mark(["B3","B3Y"],t(UI.dateError));return;
+      }
+      if(!nightsValid()){
+        mark(["B4"],t(UI.nightsError));return;
+      }
+    }
+
+    if(step===PAGES.length){
+      submit();return;
+    }
+  }
+
+  step+=direction;
+  draw();focusH();
+});
+
+document.addEventListener("input",event=>{
+  if(event.target.matches("#card textarea")&&!busy&&!submissionAttempted){
+    collect();
+  }
+});
+document.addEventListener("change",event=>{
+  if(busy||submissionAttempted) return;
+  const el=event.target;
+
+  if(el.dataset&&el.dataset.max){
+    const count=document.querySelectorAll(
+      `#card input[name="${el.name}"]:checked`
+    ).length;
+    if(count>Number(el.dataset.max)){
+      el.checked=false;
+      $("msg").textContent=t(UI.max);
+      return;
+    }
+  }
+
+  collect();
+  const depends=(step===0?SCR:PAGES[step-1]?.q||[])
+    .some(q=>q.dep&&q.dep[0]===el.name);
+
+  if(depends || el.id==="sensitive_consent"){
+    const y=window.scrollY;
+    draw();window.scrollTo(0,y);
+  }
+});
+
+/*
+  No localStorage/sessionStorage access:
+  previously saved drafts are neither loaded nor reused.
+  Old drafts from the original survey may still exist in the user's
+  browser until that site's storage is manually cleared.
+*/
+li=detect();
 draw();
 </script>
 </body>
